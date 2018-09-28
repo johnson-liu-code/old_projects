@@ -1,0 +1,246 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <typeinfo>
+#include <iostream>
+#include <complex>
+#include <vector>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+#include "zeng_eos.h"
+#include "vinet_eos.h"
+#include "bme_eos.h"
+#include "compute_pressure_mass.h"
+#include "euler.h"
+#include "invert_3x3_matrix.h"
+#include "solve_quadratic.h"
+#include "interpolate_surface.h"
+#include "rk4.h"
+#include "trajecs.h"
+
+
+
+double G = 6.673 * pow(10, -8);                     // cm^3 g^-1 s^-2 (Graviational constant).
+
+vector<double> parse_parameters(string user_input)
+{
+    string delim = "x";
+
+    vector<double> parameters;
+    int index = 0;
+
+    int start = 0;
+    int end = user_input.find(delim);
+    
+    while (end != string::npos)
+    {
+        parameters.push_back( stod( user_input.substr( start, end - start ) ) );
+
+        start = end + delim.length();
+        end = user_input.find( delim, start );
+        index++;
+    }
+    parameters.push_back( stod( user_input.substr( start, end - start) ) );
+
+    return parameters;
+}
+
+
+int main(int argc, char* argv[])
+{
+    
+    bool print_meas = false;
+    bool starting_euler = false;
+    
+    for (int i = 1; i < argc; i++)
+    {
+        if (string(argv[i]) == "-p")
+        {
+            print_meas = true;
+        }
+        if (string(argv[i]) == "-s")
+        {
+            starting_euler = true;
+        }
+    }
+    
+    int number_of_layers = atof(argv[1]);                                               // Number of layers within the planet.
+    
+    if (number_of_layers != 1 && number_of_layers != 2 && number_of_layers != 3)
+    {
+        printf("Please enter in '1', '2', or '3' for the first positional argument.");
+        exit(EXIT_FAILURE);
+    }
+    
+    string radii_input = argv[2];                                                                // List of the layer radii.
+    string rho_input = argv[3];                                                                 // List of the densities at zero pressure.
+    string K_input = argv[4];                                                                     // List of the bulk moduli of the materials.
+    
+    vector<double> radii_list = parse_parameters(radii_input);
+    vector<double> rho_list = parse_parameters(rho_input);
+    vector<double> K_list = parse_parameters(K_input);
+
+    double pressure = atof(argv[5]);                                                           // (GPa) The pressure at the center of the planet.
+    double delta_r = atof(argv[6]);                                                             // (cm) Integration step size.
+    double r = delta_r;                                                                                  // (cm) Initial radius to start integration.
+//    double Rp = atof(argv[7]);                                                                     // (cm) Radius of the planet.
+//    double Mp = atof(argv[8]);                                                                    // (g) Mass of the planet.
+
+    string integrator = argv[7];                                                                     // Select (e)uler, (r)unge-kutta 4th order, or euler-(c)romer.
+    string eos = argv[8];
+    
+    double thresh = pow(10., -7.);          // Threshold for computing rho.
+
+    double frac_radius;
+    double frac_mass;
+
+    printf("Initial Pressure (GPa): %f\n", pressure);
+    printf("Integrator: %s\n", integrator.c_str());
+
+
+    double K0p = 0;
+    if (eos == "v")
+    {
+        K0p = 6.08;
+    }
+    else if (eos == "b")
+    {
+        K0p = 5.5;
+    }
+    
+    double rho = 1;                                                                                         // (g cm^-3) Intial guess for rho.
+    
+    if (eos == "z")
+    {
+        rho = compute_rho_zeng(pressure, K_list[0], rho_list[0], rho, thresh);  // Compute rho from initial guess.
+    }
+    else if (eos == "v")
+    {
+        rho = compute_rho_vinet(pressure, K_list[0], K0p, rho_list[0], rho, thresh);
+    }
+    else if (eos == "b")
+    {
+        rho = compute_rho_bme(pressure, K_list[0], K0p, rho_list[0], rho, thresh);
+    }
+
+    double mass = rho * 4*M_PI/3 * r*r*r;                                               // (g) Initial mass.
+
+//    vector<double> quantities;
+//    quantities.reserve(3);
+//
+
+    double interface;
+
+    if (number_of_layers == 3)
+    {
+        interface = radii_list[0];
+    }
+    
+    vector<double> quantities;
+    quantities.reserve(7);
+    
+    quantities = run_trajectory(number_of_layers, print_meas, pressure, mass, integrator, rho, r, delta_r, radii_list, rho_list, K_list, K0p, thresh, G, eos);
+
+//    int section = 0;
+
+//    while (pressure > 0)
+//    {
+//        prevprev_pressure = prev_pressure;
+//        prev_pressure = pressure;
+//        
+//        prevprev_mass = prev_mass;
+//        prev_mass = mass;
+//
+//        if (integrator == "e")
+//        {
+//            quantities = euler_update(pressure, mass, rho, r, delta_r, K_list[section], rho_list[section], thresh, G);
+//        }
+//        else if (integrator == "c")
+//        {
+//            quantities = euler_cromer_update(pressure, mass, rho, r, delta_r, K_list[section], rho_list[section], thresh, G);
+//        }
+//        else if (integrator == "r")
+//        {
+//            quantities = RK4_update(pressure, mass, rho, r, delta_r, K_list[section], K0p, rho_list[section], thresh, G, eos);
+//        }
+//        
+//        pressure = quantities[0];
+//        mass = quantities[1];
+//        rho = quantities[2];
+//        
+//        if (print_meas == true)
+//        {
+////            frac_radius = r / Rp;
+////            frac_mass = mass / Mp;
+////            printf("frac_r: %f   density: %f     pressure: %f    frac_mass: %f\n", frac_radius, rho, pressure, frac_mass);
+//            printf("r: %g   density: %g     pressure: %g    mass: %g\n", r, rho, pressure, mass);
+//        }
+//        r += delta_r;
+//        
+//        if (number_of_layers == 3)
+//        {
+//            if (section == 0)
+//            {
+//                if (pressure < interface)
+//                {
+//                    section++;
+//                }
+//            }
+//            else if (section < radii_list.size())
+//            {
+////                if (r > radii_list[section]*Rp)
+//                if (r > radii_list[section])
+//                {
+//                    section++;
+//                }
+//            }
+//        }
+//        
+//        else if (number_of_layers == 2)
+//        {
+//            if (section < radii_list.size())
+//            {
+////                if (r > radii_list[section]*Rp)
+//                if (r > radii_list[section])
+//                {
+//                    section++;
+//                }
+//            }
+//        }
+//    }
+
+//    double prev_pressure = quantities[3], prevprev_pressure = quantities[4], prev_mass = quantities[5], prevprev_mass = quantities[6];
+
+    // (P, R) format for interpolation for surface radius.
+////   vector< vector<double> > three_points_pressure = {{pressure, r}, {prev_pressure, r - delta_r}, {prevprev_pressure, r - 2*delta_r}};
+////    vector<double> final_pressure_radius = interpolate_surface_radius(three_points_pressure, r);
+//    cout << "frac radius: " << r/Rp << endl;
+////    double final_pressure = final_pressure_radius[0];
+////   double final_radius = final_pressure_radius[1];
+//    cout << "final frac radius: " << final_radius / Rp << endl;
+    
+    // (M, R) format for interpolation of surface mass.
+//    cout << "mass: " << mass << endl;
+//    vector< vector<double> > three_points_mass = {{mass, r}, {prev_mass, r - delta_r}, {prevprev_mass, r - 2*delta_r}};
+//    double final_mass = interpolate_surface_mass(three_points_mass, final_radius);
+//    cout << "final mass: " << final_mass << endl;
+
+//    cout << pressure << endl;
+//    cout << prev_pressure << endl;
+//    cout << prevprev_pressure << endl;
+//    cout << r << endl;
+//    cout << r - delta_r << endl;
+//    cout << r-2*delta_r << endl;
+
+//    cout << final_radius << endl;
+
+//    frac_radius = final_radius / Rp;
+//    frac_mass = final_mass / Mp;
+//    frac_mass = mass / Mp;
+//   printf("frac_r: %.10g   density: %.10g     pressure: %.10g    frac_mass: %.10g\n", frac_radius, rho, pressure, frac_mass);
+////   printf("r: %.12g   density: %.12g     pressure: %.12g    mass: %.12g\n", final_radius, rho, final_pressure, mass);
+
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "solid_liquid_iron_curve.py", line 131, in <module>
+    next_radii_guess = str(lin_inter(data_list[0], data_list[1], expected_core_mass_frac ))
+  File "/home/jliu/Desktop/files/research/planet_interior_simulator/processing_files/linear_interpolater.py", line 17, in lin_inter
+    next_x_guess = x_values[1] + delta_y/slope
+ZeroDivisionError: float division by zero
