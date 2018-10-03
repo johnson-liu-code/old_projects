@@ -1,10 +1,26 @@
 
-import sys
-from run_integrator import *
 
+'''
+l = ['1', '2', 'done', '3']
 
-file_name = sys.argv[1]
+for i in l:
+    print i
+    if i == 'done':
+        break
 
-final_radius, final_mass, core_mass = run_integrator( file_name, '2', '1.64882569683e8', '7.85x3.98', '255x206', '40.1436514877', '1e4', 'r', 'z')
+done = False
 
-print(final_radius, final_mass, core_mass)
+n = 1
+
+while done == False:
+    print n
+    n += 1
+    if n == 10:
+        break
+'''
+
+import numpy as np
+
+x = np.linspace(10, 8000, 200)
+
+print x

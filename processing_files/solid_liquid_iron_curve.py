@@ -1,5 +1,6 @@
 
 import argparse
+import numpy as np
 
 from run_integrator import *
 from linear_interpolater import *
@@ -78,15 +79,21 @@ while done == False:
 #pressure_list = ['9000', '10000']
 #pressure_list = ['50', '100', '250']
 #pressure_list = ['400', '500', '600', '700', '800', '900']
-pressure_list = ['100', '200', '500']
-
+#pressure_list = ['100', '200', '500']
+#pressure_list = ['8000', '9000', '10000']
+#pressure_list = ['8000']
 #pressure_list = ['900', '90000']
 
-#pressure_list = np.linspace(100, 10000, 200)
+#pressure_list = np.linspace(100, 8000, 200)
+pressure_list = np.linspace(338.190954774, 457.286432161, 4)
+#pressure_list = np.linspace(298.492462312, 496.984924623, 6)
 
-radii_list_list = ['.1', '.3', '.5', '.7', '.9']
+#radii_list_list = ['.1', '.3', '.5', '.7', '.9']
+radii_list_list = [ str(x) for x in np.linspace(.1*6.3781e8, 1.2*6.3781e8, 6) ]
+#print radii_list_list
 
 #print pressure_list
+
 
 #for pressure in list(reversed(pressure_list)):
 for pressure in pressure_list:
@@ -126,12 +133,12 @@ for pressure in pressure_list:
 
         if data_list[1][0] == data_list[1][1]:
             #print 'break'
-            done = True
+            unstable = True
             break
 
         while done == False:
-            print 'data_list_0: ', data_list[0]
-            print 'data_list_1: ', data_list[1]
+            #print 'data_list_0: ', data_list[0]
+            #print 'data_list_1: ', data_list[1]
 
             next_radii_guess = str(lin_inter(data_list[0], data_list[1], expected_core_mass_frac ))
             #print 'next guess: ', next_radii_guess
@@ -149,8 +156,8 @@ for pressure in pressure_list:
             #print ('core_radius: ', data_list[0])
             #print ('core_mass_frac: ', data_list[1])
 
-            print 'data_list_0: ', data_list[0]
-            print 'data_list_1: ', data_list[1]
+            #print 'data_list_0: ', data_list[0]
+            #print 'data_list_1: ', data_list[1]
 
             if abs( core_mass_frac - expected_core_mass_frac ) < thresh:
                 done = True
@@ -160,7 +167,15 @@ for pressure in pressure_list:
                 #print 'break'
             #    done = True
             #    break
+            if data_list[1][0] == data_list[1][1] and float(data_list[1][0]) < 1:
+                done = True
+                break
+
             if data_list[1][0] == data_list[1][1] and float(data_list[1][0]) >= 1:
+                unstable = True
+                break
+
+            if data_list[0][0] < 0 or data_list[0][1] < 0:
                 unstable = True
                 break
 

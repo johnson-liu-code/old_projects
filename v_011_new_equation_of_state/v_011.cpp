@@ -98,12 +98,11 @@ int main(int argc, char* argv[])
     
     double mass_core = expected_core_mass_frac * expected_mass;
     
-    for (int i = 0; i < radii_list.size(); i++)
-    {
-        radii_list[i] = radii_list[i] * expected_radius;
-        printf("radii_list: %f\n", radii_list[i]);
-
-    }
+//    for (int i = 0; i < radii_list.size(); i++)
+//    {
+//        radii_list[i] = radii_list[i] * expected_radius;
+//        printf("radii_list: %f\n", radii_list[i]);
+//    }
 
     double thresh = pow(10., -10.);          // Threshold for computing rho.
 

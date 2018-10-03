@@ -1,6 +1,4 @@
-Traceback (most recent call last):
-  File "solid_liquid_iron_curve.py", line 131, in <module>
-    next_radii_guess = str(lin_inter(data_list[0], data_list[1], expected_core_mass_frac ))
-  File "/home/jliu/Desktop/files/research/planet_interior_simulator/processing_files/linear_interpolater.py", line 17, in lin_inter
-    next_x_guess = x_values[1] + delta_y/slope
-ZeroDivisionError: float division by zero
+pressure: 338.190954774 mass: 0.8967931295 radius: 0.954678997 core_mass_frac: 0.2959008342
+pressure: 377.889447236 mass: 1.010653827 radius: 0.989059147 core_mass_frac: 0.2958943872
+pressure: 417.587939699 mass: 1.123930763 radius: 1.020437942 core_mass_frac: 0.2958925653
+pressure: 457.286432161 mass: 1.236568486 radius: 1.04930254 core_mass_frac: 0.2958971246

@@ -68,11 +68,11 @@ with open(file_name_liquid, 'r') as fil:
 mass_radius_liquid = sorted( [ (float(m.split()[3]), float(m.split()[5]) ) for m in lines_liquid] )
 mass_liquid, radius_liquid = zip(*mass_radius_liquid)
 
-#plt.plot(mass_solid, radius_solid, label = 'solid')
-plt.scatter(mass_solid, radius_solid, label = 'solid')
+plt.plot(mass_solid, radius_solid, label = 'solid')
+#plt.scatter(mass_solid, radius_solid, label = 'solid')
 
-#plt.plot(mass_liquid, radius_liquid, label = 'liquid')
-plt.scatter(mass_liquid, radius_liquid, label = 'liquid')
+plt.plot(mass_liquid, radius_liquid, label = 'liquid')
+#plt.scatter(mass_liquid, radius_liquid, label = 'liquid')
 
 
 CMF_solid = 0.295896
@@ -84,8 +84,8 @@ x = np.linspace(min(mass_solid), max(mass_solid))
 y1 = (1.07 - .21*CMF_solid)*x**(1/3.7)
 y2 = (1.07 - .21*CMF_liquid)*x**(1/3.7)
 
-plt.plot(x, y1, label = 'Zeng solid')
-plt.plot(x, y2, label = 'Zeng liquid')
+#plt.plot(x, y1, label = 'Zeng solid')
+#plt.plot(x, y2, label = 'Zeng liquid')
 
 '''
 def func_solid(x_range, a, b, c):
@@ -124,7 +124,7 @@ import numpy as np
 
 
 Mat_ydata=[]
-Mat_angle=[]
+Mat_core=[]
 Mat_xdata=[]
 
 #for c in range(0,100,20):
@@ -132,11 +132,11 @@ Mat_xdata=[]
 #    xdata=linspace(0,num_points/2, num_points)
 #    ydata=5.1/((xdata-c)**2+2.1**2)+0.05*((0.5*rand(num_points))*exp(2*rand(num_points)**2))
     #print ydata
-#    Mat_angle.append(c)
+#    Mat_core.append(c)
 #    Mat_ydata.append(ydata)
 #    Mat_xdata.append(xdata)
 
-#print Mat_angle
+#print Mat_core
 #print Mat_ydata
 #print Mat_xdata
 #print np.size(Mat_xdata)
@@ -144,18 +144,25 @@ Mat_xdata=[]
 
 def lor_func(x, cmf, par):
 #    a,b,d=par
-    a, b, c = par
+    a, b, c, d = par
+    x = np.array(x)
 #    return a/((x-c)**2+b**2)
-    return (a - b * cmf) * x**c
+    #return (a - b * cmf) * x**c
+    #return a*np.log(b*x**c)
+    #print type(x)
+    #return a*np.ones(len(x)) + b*x + c*x**2
+    #return a*np.arctan2(b*x + c, 1) + d
+    #return a/(b+c*np.exp(-x)) + d
+    return a/(b*x**c) + d
 
 def err (p, cmf, x, y):
     return lor_func(x, cmf, p) - y
 
-Mat_angle = [CMF_solid, CMF_liquid]
+Mat_core = [CMF_solid, CMF_liquid]
 Mat_xdata = [mass_solid, mass_liquid]
 Mat_ydata = [radius_solid, radius_liquid]
 
-#print len(Mat_angle)
+#print len(Mat_core)
 #print len(Mat_xdata)
 #print len(Mat_ydata)
 
@@ -168,19 +175,19 @@ def err_global(p, Mat_a, Mat_x, Mat_y):
     return err0
 
 
-p_global = [1, 1, 1]
-p_best, success = optimize.leastsq(err_global, p_global, args = ( Mat_angle, Mat_xdata, Mat_ydata ), maxfev = 40000)
+p_global = [1, 1, 1, 1]
+p_best, success = optimize.leastsq(err_global, p_global, args = ( Mat_core, Mat_xdata, Mat_ydata ), maxfev = 40000)
 
 toplot = []
-for i in range( 0, len( Mat_angle ) ):
-    toplot.append( lor_func( Mat_xdata[i], Mat_angle[i], p_best ) )
-err_toplot = err_global( p_best, Mat_angle, Mat_xdata, Mat_ydata )
+for i in range( 0, len( Mat_core ) ):
+    toplot.append( lor_func( Mat_xdata[i], Mat_core[i], p_best ) )
+err_toplot = err_global( p_best, Mat_core, Mat_xdata, Mat_ydata )
 print p_best
 print success
 
 labels = ['custom solid', 'custom liquid']
 
-for i in range( 0, len( Mat_angle ) ):
+for i in range( 0, len( Mat_core ) ):
     #plt.plot(Mat_xdata[i],Mat_ydata[i],'o',Mat_xdata[i],toplot[i],'-')
     plt.plot( Mat_xdata[i], toplot[i], '--', label = labels[i])
 
