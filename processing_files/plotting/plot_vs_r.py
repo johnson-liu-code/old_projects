@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser()
 
 parser.add_argument("file_name1")
-parser.add_argument("file_name2")
+#parser.add_argument("file_name2")
 #parser.add_argument("file_name3")
 #parser.add_argument("-s", "--save", action = 'store_true')
 args = parser.parse_args()
@@ -19,11 +19,11 @@ args = parser.parse_args()
 
 with open(args.file_name1, 'r') as fil:
     lines = fil.readlines()
-    points1 = [(float(l.split()[1]), float(l.split()[3]), float(l.split()[5]), float(l.split()[7])) for l in lines[3:-1]]
+    points1 = [(float(l.split()[1]), float(l.split()[3]), float(l.split()[5]), float(l.split()[7])) for l in lines[3:-5]]
 
-with open(args.file_name2, 'r') as fil:
-    lines = fil.readlines()
-    points2 = [(float(l.split()[1]), float(l.split()[3]), float(l.split()[5]), float(l.split()[7])) for l in lines[3:-1]]
+#with open(args.file_name2, 'r') as fil:
+#    lines = fil.readlines()
+#    points2 = [(float(l.split()[1]), float(l.split()[3]), float(l.split()[5]), float(l.split()[7])) for l in lines[3:-1]]
 
 
 #with open(args.file_name1, 'r') as fil:
@@ -42,20 +42,20 @@ with open(args.file_name2, 'r') as fil:
 r1, d1, p1, m1 = zip(*points1)
 data1 = [d1, p1, m1]
 
-r2, d2, p2, m2 = zip(*points2)
-data2 = [d2, p2, m2]
+#r2, d2, p2, m2 = zip(*points2)
+#data2 = [d2, p2, m2]
 
 #r3, d3, p3, m3 = zip(*points2)
 #data3 = [d3, p3, m3]
 
 d1 = np.array(d1)
-d2 = np.array(d2)
+#d2 = np.array(d2)
 #d3 = np.array(d3)
 p1 = np.array(p1)
-p2 = np.array(p2)
+#p2 = np.array(p2)
 #p3 = np.array(p3)
 m1 = np.array(m1)
-m2 = np.array(m2)
+#m2 = np.array(m2)
 #m3 = np.array(m3)
 
 
@@ -63,10 +63,10 @@ m2 = np.array(m2)
 #p_diff = np.log10( np.absolute(p1 - p2) )
 #m_diff = np.log10( np.absolute(m1 - m2) )
 
-r1 = r1[:63701]
-d_diff = abs(d1[:63701] - d2[:63701])
-p_diff = abs(p1[:63701] - p2[:63701])
-m_diff = abs(m1[:63701] - m2[:63701])
+#r1 = r1[:63701]
+#d_diff = abs(d1[:63701] - d2[:63701])
+#p_diff = abs(p1[:63701] - p2[:63701])
+#m_diff = abs(m1[:63701] - m2[:63701])
 
 #print d_diff
 #print p_diff
@@ -79,10 +79,10 @@ m_diff = abs(m1[:63701] - m2[:63701])
 #print d2[0]
 #print d3[0]
 
-data_diff = [d_diff, p_diff, m_diff]
+#data_diff = [d_diff, p_diff, m_diff]
 
-#ylabels = [ 'Density\n(g cm$^{-3}$)', 'Pressure\n(GPa)', 'Mass(g)' ]
-ylabels = ['Difference\nin Density\n' + r'(g cm$^{-3}$)', 'Difference\nin Pressure\n(GPa)', 'Difference\nin Mass\n(g)']
+ylabels = [ 'Density\n(g cm$^{-3}$)', 'Pressure\n(GPa)', 'Mass(g)' ]
+#ylabels = ['Difference\nin Density\n' + r'(g cm$^{-3}$)', 'Difference\nin Pressure\n(GPa)', 'Difference\nin Mass\n(g)']
 #ylabels = [ r'Log$_{10}$' + '\nof the\ndifference\nin Density', r'Log${_10}$' + '\nof the\ndifference\nin Pressure', r'Log$_{10}$' + '\nof the\ndifference\nin Mass' ]
 plot_label = [ 'Density', 'Pressure', 'Mass' ]
 
@@ -96,12 +96,30 @@ plot_label = [ 'Density', 'Pressure', 'Mass' ]
 #loc1 = 16460
 #loc2 = 16490
 
+plt.figure()
+plt.plot(r1, d1)
+
+plt.xlabel('Distance from center')
+plt.ylabel('Density')
+plt.grid()
+plt.show()
+
+'''
+plt.figure()
+plt.plot(r1, p1)
+plt.show()
+
+plt.figure()
+plt.plot(r1, m1)
+plt.show()
+'''
+'''
 #for n, dat in enumerate(data1):
 for n, dat in enumerate(data_diff):
     fig, ax = plt.subplots()
 
     #plt.plot(r1, data1[n], '-', linewidth = 3, label = 'Quad')
-    plt.plot(r1, data_diff[n], label = 'Abs(Solid - Liquid)')
+    #plt.plot(r1, data_diff[n], label = 'Abs(Solid - Liquid)')
     #plt.plot(r2, data2[n], '--', linewidth = 2, label = 'Lin')
     #plt.plot(r3, data3[n], '-', linewidth = 10, alpha = .3, label = 'None')
 
@@ -117,6 +135,7 @@ for n, dat in enumerate(data_diff):
     plt.tight_layout()
 
     plt.show()
+'''
 '''
     if args.save == True:
         fields = args.file_name1.split('data')

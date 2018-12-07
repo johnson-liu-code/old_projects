@@ -4,7 +4,7 @@ import numpy as np
 
 def lin_inter(x_values, y_values, desired_y):
     slope = (y_values[1] - y_values[0])/(x_values[1] - x_values[0])
-    #print slope
+
     #print abs(desired_y - y_values[0])
     #print abs(desired_y - y_values[1])
     if abs(desired_y - y_values[0]) < abs(desired_y - y_values[1]):

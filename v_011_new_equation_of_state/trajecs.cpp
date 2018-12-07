@@ -15,7 +15,7 @@ using namespace std;
 
 
 
-vector<double> run_trajectory(double number_of_layers, bool print_meas, double pressure, double mass, string integrator, double rho, double r, double delta_r, vector<double> radii_list, vector<double> rho_list, vector<double> K_list, double K0p, double thresh, double G, string eos, double mass_core)
+vector<double> run_trajectory(double number_of_layers, bool print_meas, double pressure, double mass, string integrator, double rho, double r, double delta_r, vector<double> radii_list, vector<double> rho_list, vector<double> K_list, double K0p, double thresh, double G, string eos, double mass_core, double Mp)
 {
     int section = 0;
     double prev_pressure = pressure, prevprev_pressure, prev_mass = mass, prevprev_mass;
@@ -31,6 +31,8 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
     vector<double> temporary_rho;
     temporary_rho.reserve(3);
 
+    double partial_mass = 0;
+
     for (int i = 0; i < 3; i++)
     {
         quantities = euler_update(pressure, mass, rho, r, delta_r, K_list[section], rho_list[section], thresh, G);
@@ -38,6 +40,8 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
         pressure = quantities[0];
         mass = quantities[1];
         rho = quantities[2];
+        
+        partial_mass += 4*M_PI*r*r*rho*delta_r;
         
         r += delta_r;
     }
@@ -79,24 +83,50 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
             printf("r: %.6g     density: %.6g     pressure: %.6g     mass: %.6g\n", r, rho, pressure, mass);
         }
         
+        partial_mass += 4*M_PI*r*r*rho*delta_r;
+//        cout << "partial mass: " << partial_mass << endl;
         r += delta_r;
+        
+//        if (number_of_layers == 3)
+//        {
+//            double interface = radii_list[0];
+//            if (section == 0)
+//            {
+//                if (pressure < interface)
+//                {
+//                    section++;
+//                    cout << "switch solid/liquid" << endl;
+//                }
+//            }
+//            else if (section < radii_list.size())
+//            {
+////                if (r > radii_list[section]*Rp)
+//                if (r > radii_list[section])
+//                {
+//                    section++;
+//                    mass_iron = mass;
+//                    cout << "switch mantle" << endl;
+//                }
+//            }
+//        }
         
         if (number_of_layers == 3)
         {
-            double interface = radii_list[0];
             if (section == 0)
             {
-                if (pressure < interface)
-                {
-                    section++;
-                }
-            }
-            else if (section < radii_list.size())
-            {
-//                if (r > radii_list[section]*Rp)
                 if (r > radii_list[section])
                 {
                     section++;
+                    cout << "switch from solid to liquid" << endl;
+                }
+            }
+            else if (section == 1)
+            {
+                if (partial_mass > .325*Mp)
+                {
+                    section++;
+                    mass_iron = mass;
+                    cout << "switch from iron to mantle" << endl;
                 }
             }
         }

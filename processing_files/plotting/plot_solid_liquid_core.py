@@ -75,6 +75,7 @@ plt.plot(mass_liquid, radius_liquid, label = 'liquid')
 #plt.scatter(mass_liquid, radius_liquid, label = 'liquid')
 
 
+
 CMF_solid = 0.295896
 CMF_liquid = 0.247954
 
@@ -178,19 +179,23 @@ def err_global(p, Mat_a, Mat_x, Mat_y):
 p_global = [1, 1, 1, 1]
 p_best, success = optimize.leastsq(err_global, p_global, args = ( Mat_core, Mat_xdata, Mat_ydata ), maxfev = 40000)
 
-toplot = []
-for i in range( 0, len( Mat_core ) ):
-    toplot.append( lor_func( Mat_xdata[i], Mat_core[i], p_best ) )
-err_toplot = err_global( p_best, Mat_core, Mat_xdata, Mat_ydata )
-print p_best
-print success
+#toplot = []
+#for i in range( 0, len( Mat_core ) ):
+#    toplot.append( lor_func( Mat_xdata[i], Mat_core[i], p_best ) )
+#err_toplot = err_global( p_best, Mat_core, Mat_xdata, Mat_ydata )
+#print p_best
+#print success
 
 labels = ['custom solid', 'custom liquid']
 
-for i in range( 0, len( Mat_core ) ):
-    #plt.plot(Mat_xdata[i],Mat_ydata[i],'o',Mat_xdata[i],toplot[i],'-')
-    plt.plot( Mat_xdata[i], toplot[i], '--', label = labels[i])
+#for i in range( 0, len( Mat_core ) ):
+#    #plt.plot(Mat_xdata[i],Mat_ydata[i],'o',Mat_xdata[i],toplot[i],'-')
+#    plt.plot( Mat_xdata[i], toplot[i], '--', label = labels[i])
+
+plt.minorticks_on()
+plt.grid(b=True, which='both', color='k', linestyle='--')
 
 plt.legend()
 
 plt.show()
+

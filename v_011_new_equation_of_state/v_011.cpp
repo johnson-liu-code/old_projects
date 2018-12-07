@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <limits>
 
 using namespace std;
 
@@ -71,7 +72,7 @@ int main(int argc, char* argv[])
     
     if (number_of_layers != 1 && number_of_layers != 2 && number_of_layers != 3)
     {
-        printf("Please enter in '1', '2', or '3' for the first positional argument.");
+        printf("Please enter in '1', '2', or '3' for the first positional argument\n.");
         exit(EXIT_FAILURE);
     }
     
@@ -142,15 +143,12 @@ int main(int argc, char* argv[])
 
     double interface;
 
-    if (number_of_layers == 3)
-    {
-        interface = radii_list[0];
-    }
+
     
     vector<double> all_quantities;
     all_quantities.reserve(9);
     
-    all_quantities = run_trajectory(number_of_layers, print_meas, pressure, mass, integrator, rho, r, delta_r, radii_list, rho_list, K_list, K0p, thresh, G, eos, mass_core);
+    all_quantities = run_trajectory(number_of_layers, print_meas, pressure, mass, integrator, rho, r, delta_r, radii_list, rho_list, K_list, K0p, thresh, G, eos, mass_core, expected_mass);
 
     pressure = all_quantities[0];
     mass = all_quantities[1];
@@ -176,13 +174,13 @@ int main(int argc, char* argv[])
 
     double mass_iron, mass_rock;
     mass_iron = all_quantities[8];
-    if (radii_list[0] > expected_radius)
-    {
-        mass_iron = mass;
-    }
+//    if (radii_list[0] > expected_radius)
+//    {
+//        mass_iron = mass;
+//    }
     mass_rock = mass - mass_iron;
     
-    printf("mass_iron: %f\n", mass_iron);
+    printf("mass_iron: %10f\n", mass_iron);
     printf("mass_rock: %f\n", mass_rock);
 
     
@@ -199,6 +197,12 @@ int main(int argc, char* argv[])
 //    printf("radius_ratio: %.10g    mass_ratio: %.10g    mass_frac_iron: %.10g    mass_frac_rock: %.10g\n", radius_ratio, mass_ratio, mass_frac_iron, mass_frac_rock);
 //    printf("radius: %.10g    mass_ratio: %.10g    mass_frac_iron: %.10g    mass_frac_rock: %.10g\n", r, mass_ratio, mass_frac_iron, mass_frac_rock);
 //    printf("radius: %.10g    mass_ratio: %.10g    core_mass_frac_ratio: %.10g\n", r, mass_ratio, core_mass_frac_ratio);
+    printf("core_mass_frac: %.10g\n", mass_frac_iron);
 //    printf("radius_ratio: %.10g    mass_ratio: %.10g    core_mass_frac_ratio: %.10g\n", radius_ratio, mass_ratio, core_mass_frac_ratio);
-    printf("radius_ratio: %.10g    mass_ratio: %.10g    core_mass_frac: %.10g\n", radius_ratio, mass_ratio, mass_frac_iron);
+//    printf("radius_ratio: %.10g    mass_ratio: %.10g    core_mass_frac_ratio: %.10g\n", radius_ratio, mass_ratio, core_mass_frac_ratio);
+    
+    typedef numeric_limits< double > dbl;
+    
+    cout.precision(dbl::max_digits10);
+    cout << "radius_ratio: " << radius_ratio << "    mass_ratio: " << mass_ratio << "    core_mass_frac_ration: " << core_mass_frac_ratio << endl;
 }

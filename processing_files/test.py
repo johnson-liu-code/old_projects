@@ -1,26 +1,14 @@
 
 
-'''
-l = ['1', '2', 'done', '3']
-
-for i in l:
-    print i
-    if i == 'done':
-        break
-
-done = False
-
-n = 1
-
-while done == False:
-    print n
-    n += 1
-    if n == 10:
-        break
-'''
-
 import numpy as np
 
-x = np.linspace(10, 8000, 200)
+#x = '{0:.200f}'.format(np.random.rand(1)[0])
+#y = str(x)
 
-print x
+#print x
+#print y
+
+print 20
+print 20.
+print 2e4
+print 2.e4

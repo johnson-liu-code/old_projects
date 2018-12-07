@@ -1,0 +1,400 @@
+
+Finding best Central Pressure for Radius ...
+
+pressure: 132.950305851, Rc: 300000000, radius: 0.9162712161, mass: 0.2210133294, CMFR: 2.669329047
+pressure: 151.000423309, Rc: 300000000, radius: 1.0076061, mass: 0.2687863873, CMFR: 2.259254169
+pressure: 149.497262714, Rc: 300000000, radius: 1.000204718, mass: 0.2645657621, CMFR: 2.290006905
+pressure: 149.45568615, Rc: 300000000, radius: 0.9999995905, mass: 0.2644477698, CMFR: 2.290881925
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 149.45568615, Rc: 231758334, radius: 1.25784166, mass: 0.3930073137, CMFR: 0.7505741916
+pressure: 149.45568615, Rc: 254305379, radius: 1.171798668, mass: 0.3378927673, CMFR: 1.135302763
+pressure: 149.45568615, Rc: 246375951, radius: 1.202414747, mass: 0.3560819072, CMFR: 0.9853370194
+pressure: 149.45568615, Rc: 247151255, radius: 1.199415181, mass: 0.3542267088, CMFR: 0.999375758
+pressure: 149.45568615, Rc: 247185729, radius: 1.199300272, mass: 0.354163121, CMFR: 0.9998976595
+pressure: 149.45568615, Rc: 247192489, radius: 1.199261588, mass: 0.3541478095, CMFR: 1.000055067
+
+Finding best Central Pressure for Radius ...
+
+pressure: 110.983982321, Rc: 247192489, radius: 0.9746744018, mass: 0.2072783469, CMFR: 1.607741044
+pressure: 115.32224814, Rc: 247192489, radius: 1.002767981, mass: 0.2221826225, CMFR: 1.511182246
+pressure: 114.894811063, Rc: 247192489, radius: 1.000033558, mass: 0.2206876471, CMFR: 1.520307894
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 114.894811063, Rc: 236025889, radius: 1.043366304, mass: 0.238047068, CMFR: 1.237298997
+pressure: 114.894811063, Rc: 226658093, radius: 1.079799129, mass: 0.2547207118, CMFR: 1.030851721
+pressure: 114.894811063, Rc: 225258159, radius: 1.085219293, mass: 0.2573594222, CMFR: 1.00246137
+pressure: 114.894811063, Rc: 225136788, radius: 1.085683354, mass: 0.2575913203, CMFR: 1.000041562
+
+Finding best Central Pressure for Radius ...
+
+pressure: 101.503995422, Rc: 225136788, radius: 0.9953958176, mass: 0.2047131921, CMFR: 1.229498022
+pressure: 102.186855539, Rc: 225136788, radius: 1.00022627, mass: 0.2072969182, CMFR: 1.215664549
+pressure: 102.15486873, Rc: 225136788, radius: 1.000000585, mass: 0.207171229, CMFR: 1.216332301
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 102.15486873, Rc: 216191868, radius: 1.034809808, mass: 0.2217410778, CMFR: 1.012588639
+pressure: 102.15486873, Rc: 215639191, radius: 1.036981249, mass: 0.2227034877, CMFR: 1.000775508
+pressure: 102.15486873, Rc: 215602909, radius: 1.037097622, mass: 0.2227625327, CMFR: 1.000112871
+pressure: 102.15486873, Rc: 215596729, radius: 1.037136496, mass: 0.2227734239, CMFR: 0.9999315463
+
+Finding best Central Pressure for Radius ...
+
+pressure: 96.8667148417, Rc: 215596729, radius: 0.9991289538, mass: 0.2016501603, CMFR: 1.094193174
+pressure: 96.9879072704, Rc: 215596729, radius: 1.000018819, mass: 0.202124855, CMFR: 1.091865747
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 96.9879072704, Rc: 213441268, radius: 1.008388902, mass: 0.2055541555, CMFR: 1.043366622
+pressure: 96.9879072704, Rc: 211513912, radius: 1.015886574, mass: 0.2087095508, CMFR: 1.001260204
+pressure: 96.9879072704, Rc: 211456228, radius: 1.016119548, mass: 0.2088098489, CMFR: 0.9999677164
+
+Finding best Central Pressure for Radius ...
+
+pressure: 94.7881795699, Rc: 211456228, radius: 0.9998595504, mass: 0.1999837618, CMFR: 1.039894727
+pressure: 94.8071706769, Rc: 211456228, radius: 1.000001291, mass: 0.2000541962, CMFR: 1.03956507
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 94.8071706769, Rc: 209757724, radius: 1.0066076, mass: 0.2027840815, CMFR: 1.002166158
+pressure: 94.8071706769, Rc: 209659346, radius: 1.00699587, mass: 0.2029479456, CMFR: 0.9999916419
+
+Finding best Central Pressure for Radius ...
+
+pressure: 93.8686932142, Rc: 209659346, radius: 0.9999731025, mass: 0.1991711784, CMFR: 1.017187479
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 93.8686932142, Rc: 208894934, radius: 1.002925041, mass: 0.2003880796, CMFR: 1.000558418
+pressure: 93.8686932142, Rc: 208869265, radius: 1.003041594, mass: 0.2004306706, CMFR: 0.9999346735
+
+Finding best Central Pressure for Radius ...
+
+pressure: 93.4620421325, Rc: 208869265, radius: 0.9999821496, mass: 0.1987952144, CMFR: 1.007400782
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 93.4620421325, Rc: 208566925, radius: 1.001147088, mass: 0.199279913, CMFR: 1.000824585
+pressure: 93.4620421325, Rc: 208529015, radius: 1.001302337, mass: 0.1993446777, CMFR: 0.9999502658
+
+Finding best Central Pressure for Radius ...
+
+pressure: 93.288906062, Rc: 208529015, radius: 0.9999968107, mass: 0.198647262, CMFR: 1.00313823
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 93.288906062, Rc: 208393377, radius: 1.000501585, mass: 0.1988511112, CMFR: 1.000322565
+pressure: 93.288906062, Rc: 208377838, radius: 1.000579295, mass: 0.1988834465, CMFR: 0.9998851749
+pressure: 93.288906062, Rc: 208381917, radius: 1.000540328, mass: 0.1988734171, CMFR: 1.000072978
+
+Finding best Central Pressure for Radius ...
+
+pressure: 93.2172526485, Rc: 208381917, radius: 0.9999995675, mass: 0.198581236, CMFR: 1.001411044
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 93.2172526485, Rc: 208358882, radius: 1.000116076, mass: 0.1986358139, CMFR: 1.00072336
+pressure: 93.2172526485, Rc: 208327562, radius: 1.000232533, mass: 0.1986781419, CMFR: 1.000097817
+
+Finding best Central Pressure for Radius ...
+
+pressure: 93.1864381809, Rc: 208327562, radius: 0.9999998402, mass: 0.1985529097, CMFR: 1.000671272
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 93.1864381809, Rc: 208293972, radius: 1.000116343, mass: 0.1986074941, CMFR: 0.9999838938
+
+Finding best Central Pressure for Radius ...
+
+pressure: 93.1710280332, Rc: 208293972, radius: 0.9999999306, mass: 0.1985387499, CMFR: 1.000301476
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 93.1710280332, Rc: 208277789, radius: 1.000077576, mass: 0.1985710503, CMFR: 0.999863873
+pressure: 93.1710280332, Rc: 208282823, radius: 1.000038608, mass: 0.1985610322, CMFR: 1.000051766
+radius: 382686000.0 mass: 1.1858064843e+27
+
+Finding best Central Pressure for Radius ...
+
+pressure: 182.115580457, Rc: 300000000, radius: 0.9873602152, mass: 0.3649405038, CMFR: 1.739386325
+pressure: 185.614580026, Rc: 300000000, radius: 1.000362886, mass: 0.3766772559, CMFR: 1.692989362
+pressure: 185.516927938, Rc: 300000000, radius: 1.00000204, mass: 0.3763487231, CMFR: 1.694250412
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 185.516927938, Rc: 250258917, radius: 1.163105502, mass: 0.5038134895, CMFR: 0.7636637287
+pressure: 185.516927938, Rc: 262891402, radius: 1.122286049, mass: 0.4656764133, CMFR: 0.9493267217
+pressure: 185.516927938, Rc: 266339205, radius: 1.111011778, mass: 0.4558961806, CMFR: 1.005709931
+pressure: 185.516927938, Rc: 265990045, radius: 1.112128381, mass: 0.4568336678, CMFR: 1.000059392
+
+Finding best Central Pressure for Radius ...
+
+pressure: 155.295792829, Rc: 265990045, radius: 0.9911810901, mass: 0.3356197161, CMFR: 1.3072324
+pressure: 157.499376436, Rc: 265990045, radius: 1.000647826, mass: 0.3440218779, CMFR: 1.279308167
+pressure: 157.348581192, Rc: 265990045, radius: 1.000003447, mass: 0.343440932, CMFR: 1.281198667
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 157.348581192, Rc: 252452168, radius: 1.044897791, mass: 0.3744449752, CMFR: 1.014969266
+pressure: 157.348581192, Rc: 251690974, radius: 1.047403302, mass: 0.3763135003, CMFR: 1.00138851
+pressure: 157.348581192, Rc: 251613149, radius: 1.047666745, mass: 0.376496577, CMFR: 1.000005435
+
+Finding best Central Pressure for Radius ...
+
+pressure: 146.139666254, Rc: 251613149, radius: 0.9984226768, mass: 0.3305013285, CMFR: 1.121073108
+pressure: 146.498695925, Rc: 251613149, radius: 1.000049627, mass: 0.331933043, CMFR: 1.116824864
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 146.498695925, Rc: 245714781, radius: 1.019585426, mass: 0.345263922, CMFR: 1.004242326
+pressure: 146.498695925, Rc: 245492519, radius: 1.020311102, mass: 0.345768014, CMFR: 1.000244917
+pressure: 146.498695925, Rc: 245478901, radius: 1.020377524, mass: 0.3458154788, CMFR: 0.9998775463
+pressure: 146.498695925, Rc: 245483440, radius: 1.020344363, mass: 0.3458004354, CMFR: 1.000036086
+
+Finding best Central Pressure for Radius ...
+
+pressure: 141.995057832, Rc: 245483440, radius: 0.9997419899, mass: 0.3271482241, CMFR: 1.050080977
+pressure: 142.051397212, Rc: 245483440, radius: 1.000002978, mass: 0.3273683663, CMFR: 1.049462627
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 142.051397212, Rc: 244460484, radius: 1.003378849, mass: 0.3296410769, CMFR: 1.030047299
+pressure: 142.051397212, Rc: 242866355, radius: 1.008666809, mass: 0.333242516, CMFR: 1.000185368
+pressure: 142.051397212, Rc: 242856459, radius: 1.008699922, mass: 0.3332741381, CMFR: 0.9999740656
+
+Finding best Central Pressure for Radius ...
+
+pressure: 140.172412457, Rc: 242856459, radius: 0.999952725, mass: 0.3254573618, CMFR: 1.02113409
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 140.172412457, Rc: 241577784, radius: 1.004182477, mass: 0.3283196525, CMFR: 0.9972209562
+pressure: 140.172412457, Rc: 241726384, radius: 1.003687009, mass: 0.3279846763, CMFR: 0.999993409
+
+Finding best Central Pressure for Radius ...
+
+pressure: 139.379920873, Rc: 241726384, radius: 0.999969679, mass: 0.3246855464, CMFR: 1.008958437
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 139.379920873, Rc: 241250483, radius: 1.001522454, mass: 0.3257276515, CMFR: 1.000209909
+pressure: 139.379920873, Rc: 241238939, radius: 1.001588583, mass: 0.3257731825, CMFR: 0.9998356335
+pressure: 139.379920873, Rc: 241244009, radius: 1.001555584, mass: 0.3257587889, CMFR: 0.9999970537
+
+Finding best Central Pressure for Radius ...
+
+pressure: 139.048157504, Rc: 241244009, radius: 0.9999942015, mass: 0.3243720167, CMFR: 1.003773301
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 139.048157504, Rc: 241125924, radius: 1.000390763, mass: 0.3246442491, CMFR: 1.001521148
+pressure: 139.048157504, Rc: 241043675, radius: 1.000654799, mass: 0.324809218, CMFR: 1.000073326
+
+Finding best Central Pressure for Radius ...
+
+pressure: 138.909015356, Rc: 241043675, radius: 0.9999991994, mass: 0.3242341045, CMFR: 1.001638222
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 138.909015356, Rc: 240953949, radius: 1.000296385, mass: 0.3244299721, CMFR: 0.9999765897
+
+Finding best Central Pressure for Radius ...
+
+pressure: 138.846125308, Rc: 240953949, radius: 0.9999999649, mass: 0.3241719161, CMFR: 1.000678214
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 138.846125308, Rc: 240917352, radius: 1.000132305, mass: 0.3242626715, CMFR: 0.9999284222
+
+Finding best Central Pressure for Radius ...
+
+pressure: 138.818041984, Rc: 240917352, radius: 0.9999996464, mass: 0.3241442011, CMFR: 1.000251739
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 138.818041984, Rc: 240905069, radius: 1.000032718, mass: 0.3241752357, CMFR: 1.000038545
+radius: 446467000.0 mass: 1.9359745076e+27
+
+Finding best Central Pressure for Radius ...
+
+pressure: 231.280855539, Rc: 300000000, radius: 1.01027765, mass: 0.5434124421, CMFR: 1.239750834
+pressure: 227.701046675, Rc: 300000000, radius: 1.000541074, mass: 0.5295608477, CMFR: 1.267120565
+pressure: 227.502112111, Rc: 300000000, radius: 0.9999960634, mass: 0.5287905045, CMFR: 1.268683791
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 227.502112111, Rc: 274078062, radius: 1.074286921, mass: 0.6123956218, CMFR: 0.8521200243
+pressure: 227.502112111, Rc: 283280340, radius: 1.048161417, mass: 0.5807155151, CMFR: 0.9855520288
+pressure: 227.502112111, Rc: 284276759, radius: 1.045330211, mass: 0.5774197404, CMFR: 1.000854782
+pressure: 227.502112111, Rc: 284221101, radius: 1.045473296, mass: 0.5776016147, CMFR: 1.000049735
+
+Finding best Central Pressure for Radius ...
+
+pressure: 210.805649343, Rc: 284221101, radius: 0.998384939, mass: 0.5087197469, CMFR: 1.114176961
+pressure: 211.378313322, Rc: 284221101, radius: 1.000055033, mass: 0.5110354107, CMFR: 1.109868888
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 211.378313322, Rc: 276992437, radius: 1.020845692, mass: 0.5330442296, CMFR: 0.9903499583
+pressure: 211.378313322, Rc: 277576085, radius: 1.019184071, mass: 0.5312251468, CMFR: 0.9995608919
+pressure: 211.378313322, Rc: 277603908, radius: 1.019097949, mass: 0.531140303, CMFR: 1.00002216
+
+Finding best Central Pressure for Radius ...
+
+pressure: 204.806100606, Rc: 277603908, radius: 0.9997475343, mass: 0.5037104463, CMFR: 1.046402323
+pressure: 204.891741896, Rc: 277603908, radius: 1.00000323, mass: 0.5040639425, CMFR: 1.0457745
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 204.891741896, Rc: 275187940, radius: 1.006956434, mass: 0.5113408021, CMFR: 1.006005607
+pressure: 204.891741896, Rc: 274822455, radius: 1.00798907, mass: 0.5124418771, CMFR: 1.000179755
+pressure: 204.891741896, Rc: 274811178, radius: 1.008017307, mass: 0.5124620535, CMFR: 1.000038706
+
+Finding best Central Pressure for Radius ...
+
+pressure: 202.201886384, Rc: 274811178, radius: 0.9999513595, mass: 0.5012031639, CMFR: 1.019246969
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 202.201886384, Rc: 273656435, radius: 1.00328112, mass: 0.5046826941, CMFR: 1.000327329
+pressure: 202.201886384, Rc: 273636456, radius: 1.003338582, mass: 0.5047445362, CMFR: 1.000000463
+
+Finding best Central Pressure for Radius ...
+
+pressure: 201.08791074, Rc: 273636456, radius: 0.999971867, mass: 0.5000629071, CMFR: 1.008022391
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 201.08791074, Rc: 273150022, radius: 1.001349064, mass: 0.501493449, CMFR: 1.000226369
+pressure: 201.08791074, Rc: 273135898, radius: 1.001406509, mass: 0.5015550183, CMFR: 0.9998988892
+pressure: 201.08791074, Rc: 273140259, radius: 1.001377925, mass: 0.5015351646, CMFR: 1.00004082
+
+Finding best Central Pressure for Radius ...
+
+pressure: 200.631824703, Rc: 273140259, radius: 0.9999950509, mass: 0.4996092376, CMFR: 1.00334861
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 200.631824703, Rc: 273061814, radius: 1.000224532, mass: 0.4998546904, CMFR: 1.00203504
+pressure: 200.631824703, Rc: 272928089, radius: 1.000626102, mass: 0.5002628515, CMFR: 0.9997830582
+pressure: 200.631824703, Rc: 272940971, radius: 1.000568903, mass: 0.5002013913, CMFR: 1.000110773
+pressure: 200.631824703, Rc: 272936617, radius: 1.000597637, mass: 0.5002430353, CMFR: 0.9999250864
+
+Finding best Central Pressure for Radius ...
+
+pressure: 200.434683388, Rc: 272936617, radius: 0.9999990551, mass: 0.4994043956, CMFR: 1.001367971
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 200.434683388, Rc: 272894738, radius: 1.000114057, mass: 0.4995271408, CMFR: 1.000711773
+pressure: 200.434683388, Rc: 272849312, radius: 1.000257224, mass: 0.4996697303, CMFR: 0.9999138129
+
+Finding best Central Pressure for Radius ...
+
+pressure: 200.349963417, Rc: 272849312, radius: 0.9999999004, mass: 0.499316473, CMFR: 1.000519748
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 200.349963417, Rc: 272819742, radius: 1.000085863, mass: 0.4994194453, CMFR: 1.000005976
+radius: 510248000.0 mass: 2.98253292733e+27
+
+Finding best Central Pressure for Radius ...
+
+pressure: 821.264155072, Rc: 300000000, radius: 0.7258027105, mass: 3.303896989, CMFR: 0.2936367452
+pressure: 1379.76280316, Rc: 300000000, radius: 0.854960788, mass: 5.956289489, CMFR: 0.1928469661
+pressure: 2006.93382792, Rc: 300000000, radius: 0.9469539614, mass: 8.797468024, CMFR: 0.1483243748
+pressure: 2368.57955835, Rc: 300000000, radius: 0.98730406, mass: 10.3736108, CMFR: 0.1332589082
+pressure: 2482.36942886, Rc: 300000000, radius: 0.9986949806, mass: 10.86099289, CMFR: 0.1293932824
+pressure: 2495.40595099, Rc: 300000000, radius: 0.99996631, mass: 10.91657214, CMFR: 0.1289719432
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 2495.40595099, Rc: 1213431977, radius: 0.5834467786, mass: 4.275552672, CMFR: 3.379565793
+pressure: 2495.40595099, Rc: 544762931, radius: 0.7826769794, mass: 5.731089981, CMFR: 1.267677636
+pressure: 2495.40595099, Rc: 487226060, radius: 0.8458900712, mass: 6.774039472, CMFR: 0.8031419345
+pressure: 2495.40595099, Rc: 511608680, radius: 0.819678901, mass: 6.303911269, CMFR: 0.980977235
+pressure: 2495.40595099, Rc: 514216850, radius: 0.8168149914, mass: 6.255906021, CMFR: 1.001655895
+pressure: 2495.40595099, Rc: 514007995, radius: 0.8170451436, mass: 6.25971331, CMFR: 0.999986207
+
+Finding best Central Pressure for Radius ...
+
+pressure: 4075.48458021, Rc: 514007995, radius: 0.9568579414, mass: 10.83427877, CMFR: 0.6995860903
+pressure: 4563.04970935, Rc: 514007995, radius: 0.988527571, mass: 12.21967824, CMFR: 0.6484290779
+pressure: 4739.67180432, Rc: 514007995, radius: 0.9991199047, mass: 12.71776489, CMFR: 0.632416586
+pressure: 4754.34697223, Rc: 514007995, radius: 0.9999826249, mass: 12.75908189, CMFR: 0.6311365647
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 4754.34697223, Rc: 589117221, radius: 0.9213444018, mass: 10.51249175, CMFR: 1.092871669
+pressure: 4754.34697223, Rc: 574018501, radius: 0.9379202163, mass: 10.92688008, CMFR: 0.984079206
+pressure: 4754.34697223, Rc: 576228062, radius: 0.935512555, mass: 10.86487096, CMFR: 0.9994871468
+pressure: 4754.34697223, Rc: 576301608, radius: 0.9354272616, mass: 10.86265025, CMFR: 1.000046788
+
+Finding best Central Pressure for Radius ...
+
+pressure: 5808.32024825, Rc: 576301608, radius: 0.9932699552, mass: 13.44867386, CMFR: 0.8763604378
+pressure: 5930.9509026, Rc: 576301608, radius: 0.9992734108, mass: 13.74721725, CMFR: 0.8646597757
+pressure: 5945.79270621, Rc: 576301608, radius: 0.9999902969, mass: 13.78323518, CMFR: 0.8632792031
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 5945.79270621, Rc: 597069721, radius: 0.9777587202, mass: 13.0908131, CMFR: 0.9954735806
+pressure: 5945.79270621, Rc: 597780835, radius: 0.9769742334, mass: 13.06754043, CMFR: 1.000315337
+pressure: 5945.79270621, Rc: 597734521, radius: 0.977029742, mass: 13.0691617, CMFR: 0.9999780239
+
+Finding best Central Pressure for Radius ...
+
+pressure: 6414.92729433, Rc: 597734521, radius: 0.9990558175, mass: 14.15557252, CMFR: 0.9525988504
+pressure: 6435.0374891, Rc: 597734521, radius: 0.9999628609, mass: 14.20206068, CMFR: 0.9507070163
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 6435.0374891, Rc: 604844532, radius: 0.9922746683, mass: 13.9576843, CMFR: 0.9969990306
+pressure: 6435.0374891, Rc: 605305648, radius: 0.9917763715, mass: 13.94202846, CMFR: 1.000052156
+
+Finding best Central Pressure for Radius ...
+
+pressure: 6616.43024751, Rc: 605305648, radius: 0.999848747, mass: 14.35358706, CMFR: 0.9826236878
+pressure: 6619.82902385, Rc: 605305648, radius: 0.9999983682, mass: 14.36128802, CMFR: 0.9823056497
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 6619.82902385, Rc: 608024890, radius: 0.997047194, mass: 14.26694342, CMFR: 1.000155808
+pressure: 6619.82902385, Rc: 608001155, radius: 0.9970687643, mass: 14.26766545, CMFR: 1.000021508
+
+Finding best Central Pressure for Radius ...
+
+pressure: 6686.6977737, Rc: 608001155, radius: 0.9999901475, mass: 14.41819916, CMFR: 0.9937139117
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 6686.6977737, Rc: 609119026, radius: 0.9987832989, mass: 14.37951035, CMFR: 1.001022309
+pressure: 6686.6977737, Rc: 608963130, radius: 0.9989476662, mass: 14.38475473, CMFR: 1.000030729
+
+Finding best Central Pressure for Radius ...
+
+pressure: 6710.77989027, Rc: 608963130, radius: 0.9999926873, mass: 14.43881583, CMFR: 0.9977736763
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 6710.77989027, Rc: 609317294, radius: 0.9996118199, mass: 14.42667556, CMFR: 1.000073922
+
+Finding best Central Pressure for Radius ...
+
+pressure: 6719.72372538, Rc: 609317294, radius: 0.9999991745, mass: 14.44669668, CMFR: 0.9992401093
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 6719.72372538, Rc: 609431502, radius: 0.9998690082, mass: 14.44259473, CMFR: 1.00002466
+
+Finding best Central Pressure for Radius ...
+
+pressure: 6722.73464207, Rc: 609431502, radius: 0.999998982, mass: 14.44926699, CMFR: 0.9997487324
+
+Finding best Rc for Core Mass Frac Ratio ...
+
+pressure: 6722.73464207, Rc: 609467655, radius: 0.9999659721, mass: 14.44824133, CMFR: 0.9999448841
+radius: 1275620000.0 mass: 8.62848972228e+28
