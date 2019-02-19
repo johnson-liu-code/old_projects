@@ -157,7 +157,7 @@ int main(int argc, char* argv[])
     r = all_quantities[7];
 
     // (P, R) format for interpolation for surface radius.
-   vector< vector<double> > three_points_pressure = {{pressure, r}, {prev_pressure, r - delta_r}, {prevprev_pressure, r - 2*delta_r}};
+    vector< vector<double> > three_points_pressure = {{pressure, r}, {prev_pressure, r - delta_r}, {prevprev_pressure, r - 2*delta_r}};
     vector<double> final_pressure_radius = interpolate_surface_radius(three_points_pressure, r);
 
     double final_pressure = final_pressure_radius[0];

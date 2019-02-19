@@ -2,7 +2,7 @@ from subprocess import Popen, PIPE
 
 
 # radii must be given as actual values, not fractions
-def run_integrator(file_name, num_layers, radii_list, rho_list, K_list, pressure, step_size, algorithm, eos, Rp, Mp, expected_core_mass_frac):
+def run_integrator(file_name, num_layers, radii_list, rho_list, K_list, pressure, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac):
 #    print file_name
 #    print num_layers
 #    print radii_list
@@ -10,11 +10,11 @@ def run_integrator(file_name, num_layers, radii_list, rho_list, K_list, pressure
 #    print K_list
 #    print pressure
 #    print step_size
-#    print Rp
-#    print Mp
+#    print radius_p
+#    print mass_p
 #    print algorithm
 
-    process = Popen(["./" + file_name, num_layers, radii_list, rho_list, K_list, str(pressure), str(step_size), algorithm, eos, Rp, Mp, expected_core_mass_frac ], stdout = PIPE)
+    process = Popen(["./" + file_name, num_layers, radii_list, rho_list, K_list, str(pressure), str(step_size), algorithm, eos, radius_p, mass_p, expected_core_mass_frac ], stdout = PIPE)
     (output, err) = process.communicate()
 
     #final_radius = output.splitlines()[-1].split()[1]

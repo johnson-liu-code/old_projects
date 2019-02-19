@@ -41,7 +41,7 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
         mass = quantities[1];
         rho = quantities[2];
         
-        partial_mass += 4*M_PI*r*r*rho*delta_r;
+//        partial_mass += 4*M_PI*r*r*rho*delta_r;
         
         r += delta_r;
     }
@@ -75,15 +75,7 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
         temporary_rho[1] = temporary_rho[2];
         temporary_rho[2] = rho;
         
-        if (print_meas == true)
-        {
-//            frac_radius = r / Rp;
-//            frac_mass = mass / Mp;
-//            printf("frac_r: %f   density: %f     pressure: %f    frac_mass: %f\n", frac_radius, rho, pressure, frac_mass);
-            printf("r: %.6g     density: %.6g     pressure: %.6g     mass: %.6g\n", r, rho, pressure, mass);
-        }
-        
-        partial_mass += 4*M_PI*r*r*rho*delta_r;
+//        partial_mass += 4*M_PI*r*r*rho*delta_r;
 //        cout << "partial mass: " << partial_mass << endl;
         r += delta_r;
         
@@ -110,28 +102,29 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
 //            }
 //        }
         
-        if (number_of_layers == 3)
-        {
-            if (section == 0)
-            {
-                if (r > radii_list[section])
-                {
-                    section++;
-                    cout << "switch from solid to liquid" << endl;
-                }
-            }
-            else if (section == 1)
-            {
-                if (partial_mass > .325*Mp)
-                {
-                    section++;
-                    mass_iron = mass;
-                    cout << "switch from iron to mantle" << endl;
-                }
-            }
-        }
+//        if (number_of_layers == 3)
+//        {
+//            if (section == 0)
+//            {
+//                if (r > radii_list[section])
+//                {
+//                    section++;
+//                    cout << "switch from solid to liquid" << endl;
+//                }
+//            }
+//            else if (section == 1)
+//            {
+//                if (partial_mass > .325*Mp)
+//                {
+//                    section++;
+//                    mass_iron = mass;
+//                    cout << "switch from iron to mantle" << endl;
+//                }
+//            }
+//        }
         
-        else if (number_of_layers == 2)
+//        else if (number_of_layers == 2)
+        if (number_of_layers == 2)
         {
             if (section < radii_list.size())
             {
@@ -144,12 +137,55 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
                 if (r > radii_list[section])
 //                if (mass > mass_core)
                 {
+                    double r_boundary = radii_list[section];
+                    
+                    double rp = r - delta_r;
+                    double delta_rt = r_boundary - rp;
+
+                    if (delta_rt == 0)
+                    {
+                        delta_rt = delta_r;
+                    }
+
+//                    cout << "r " << r << endl;
+//                    cout << "r_boundary " << r_boundary << endl;
+//                    cout << "rp " << rp << endl;
+//                    cout << "delta_r " << delta_r << endl;
+//                    cout << "delta_rt " << delta_rt << endl;
+
+                    if (integrator == "e")
+                    {
+                        quantities = euler_update(pressure, mass, rho, r_boundary, delta_rt, K_list[section], rho_list[section], thresh, G);
+                    }
+                    else if (integrator == "c")
+                    {
+                        quantities = euler_cromer_update(pressure, mass, rho, r_boundary, delta_rt, K_list[section], rho_list[section], thresh, G);
+                    }
+                    else if (integrator == "r")
+                    {
+                        quantities = RK4_update(pressure, mass, rho, r_boundary, delta_rt, K_list[section], K0p, rho_list[section], thresh, G, eos, temporary_rho);
+                    }
+
+                    pressure = quantities[0];
+                    mass = quantities[1];
+                    rho = quantities[2];
+                    
+                    r = r_boundary;
+                    
                     section++;
 //                    printf("hello\n");
                     mass_iron = mass;
 //                    printf("mass_iron: %f\n", mass_iron);
                 }
             }
+        }
+        
+        if (print_meas == true)
+        {
+//            frac_radius = r / Rp;
+//            frac_mass = mass / Mp;
+//            printf("frac_r: %f   density: %f     pressure: %f    frac_mass: %f\n", frac_radius, rho, pressure, frac_mass);
+            printf("r: %.6g     density: %.6g     pressure: %.6g     mass: %.6g\n", r, rho, pressure, mass);
         }
     }
     
