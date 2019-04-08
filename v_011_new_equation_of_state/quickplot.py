@@ -24,6 +24,10 @@ max_density = max(max(density_1), max(density_2))
 max_pressure = max(max(pressure_1), max(pressure_2))
 max_mass = max(max(mass_1), max(mass_2))
 
+#max_density = max(density_1)
+#max_pressure = max(pressure_1)
+#max_mass = max(mass_1)
+
 '''
 density_1 = np.array(density_1) / max(density_1)
 pressure_1 = np.array(pressure_1) / max(pressure_1)
@@ -42,9 +46,9 @@ density_2 = np.array(density_2) / max_density
 pressure_2 = np.array(pressure_2) / max_pressure
 mass_2 = np.array(mass_2) / max_mass
 
-plt.plot(r_1, density_1, label = 'density (1)', marker = 'o')
-plt.plot(r_1, pressure_1, label = 'pressure (1)', marker = 'o')
-plt.plot(r_1, mass_1, label = 'mass (1)', marker = 'o')
+plt.plot(r_1, density_1, label = 'density (1)')
+plt.plot(r_1, pressure_1, label = 'pressure (1)')
+plt.plot(r_1, mass_1, label = 'mass (1)')
 
 plt.plot(r_2, density_2, label = 'density (2)')
 plt.plot(r_2, pressure_2, label = 'pressure (2)')
