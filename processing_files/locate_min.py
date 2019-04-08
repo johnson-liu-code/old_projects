@@ -14,12 +14,7 @@ parser.add_argument("eos")
 args = parser.parse_args()
 
 thresh = 1.e-3
-#thresh = 1.e-5
-#variables = ['Central Pressure', 'Rc', 'Radius', 'Mass']
-#variables = ['Central Pressure', 'Rc', 'Core Mass Frac Ratio', 'Mass']
 variables = ['Central Pressure', 'Rc', 'Radius', 'Core Mass Frac Ratio']
-#step_size = 5e3
-#step_size = 1e4 # Sometimes the step size is larger than the difference between Rc1 and Rc2.
 
 algorithm = args.integration_method
 eos = args.eos
@@ -46,56 +41,38 @@ elif num_layers == '2':
         rho_list = '7.05x3.98'
         K_list = '201x206'
 
-# Mercury
-#Rp = '2.439e8'
-#Mp = '3.302e26'
-
 # Earth
-#Rp = '6.3781e8'
 earth_radius = '6.3781e8'
-#Mp = '5.972e27'
 earth_mass = '5.972e27'
 
-
+CMFR_thresh = 1e-3
+reduction_factor = .5
 
 def initialize_data(data_list, inde_index, other_inde_index, step_size):
     for c, i in enumerate( data_list[inde_index] ):
-        #print 'c', c
-        #print 'i', i
         if inde_index == 0:
             radii_list = str( data_list[other_inde_index][1] )
-            #print 'radii_list', radii_list
-            #radii_list = core_boundary + str( data_list[other_inde_index][-1] )
-            #radii_list = core_boundary + '{0:.10f}'.format( data_list[other_inde_index][-1] )
             pressure = str(i)
-            #pressure = '{0:.10f}'.format(i)
 
         elif inde_index == 1:
             radii_list = str(i)
-            #radii_list = str(i)
-            #radii_list = core_boundary + '{0:.10f}'.format(i)
             pressure = str( data_list[other_inde_index][1] )
-            #pressure = '{0:.10f}'.format( data_list[other_inde_index][-1] )
 
         final_radius, final_mass, core_mass_frac_ratio = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, pressure, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac)
         #print final_radius, final_mass, core_mass_frac_ratio
         ##################################################
-        data_list[2].append(final_radius)        # radius
+        data_list[2].append(final_radius)          # radius
         ##################################################
-        # CHANGE TO FITTING CORE MASS FRAC HERE
         #data_list[2].append(core_mass_frac_ratio) # CMFR
         ##################################################
-        #data_list[3].append(final_mass)      # mass
-        data_list[3].append(core_mass_frac_ratio) # CMFR
-#    print('depe_variable: ', depe_index, ', inde_variable: ', inde_index)
+        #data_list[3].append(final_mass)           # mass
+        data_list[3].append(core_mass_frac_ratio)  # CMFR
 
     return data_list
 
 def find_min(data_list, inde_index, depe_index, desired_y, expected_core_mass_frac, radius_p, mass_p):
     print('\nFinding best {} for {} ...\n'.format( variables[inde_index], variables[depe_index] ) )
 
-    #print data_list[2]
-    #print type(data_list[2])
     data_list[2] = []    # radius / core_mass_frac_ratio
     data_list[3] = []    # mass
 
@@ -106,13 +83,8 @@ def find_min(data_list, inde_index, depe_index, desired_y, expected_core_mass_fr
     data_list = initialize_data(data_list, inde_index, other_inde_index, step_size)
 
     while abs( desired_y - data_list[depe_index][1] ) > thresh:
-        #print 'data: ', data_list
 
         while np.abs(data_list[1][0] - data_list[1][1]) < float(step_size):
-            #step_size = str(.1*float(step_size))
-            print 'OOPS'
-            #print np.abs(data_list[1][0] - data_list[1][1])
-            #step_size = str(.1*float(step_size))
             step_size = str(.5*float(step_size))
 
             if float(step_size) < 1e1:
@@ -127,27 +99,23 @@ def find_min(data_list, inde_index, depe_index, desired_y, expected_core_mass_fr
         print data_list
 
         next_inde_guess = lin_inter( data_list[inde_index], data_list[depe_index], desired_y )
-        #print type(next_inde_guess)
         print 'next_inde_guess: {0:.10f}'.format(next_inde_guess)
-        #print next_inde_guess
 
         step_size = '1e4'
+
+#        print 'inde_index: ', inde_index
 
         if inde_index == 0:
             radii_list = str( data_list[other_inde_index][1] )
             pressure = str(next_inde_guess)
 
             final_radius, final_mass, core_mass_frac_ratio = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, pressure, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac )
-            #print('pressure: {0}, Rc: {1:.0f}, radius: {2}, mass: {3}, CMFR: {4}'.format(next_inde_guess, data_list[other_inde_index][1], final_radius, final_mass, core_mass_frac_ratio))
-            #print('pressure: {} Rc: {} core_mass_frac_ratio: {} mass: {}'.format(next_inde_guess, data_list[other_inde_index][-1], core_mass_frac_ratio, final_mass))
-            #print core_mass_frac_ratio
+
         elif inde_index == 1:
             radii_list = str(next_inde_guess)
             pressure = str( data_list[other_inde_index][1] )
 
             final_radius, final_mass, core_mass_frac_ratio = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, pressure, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac )
-            #print('pressure: {0}, Rc: {1:.0f}, radius: {2}, mass: {3}, CMFR: {4}'.format(data_list[other_inde_index][1], next_inde_guess, final_radius, final_mass, core_mass_frac_ratio))
-            #print('pressure: {} Rc: {} core_mass_frac_ratio: {} mass: {}'.format(data_list[other_inde_index][-1], next_inde_guess, core_mass_frac_ratio, final_mass))
 
         if abs(desired_y - data_list[depe_index][0]) < abs(desired_y - data_list[depe_index][1]):
             data_list[inde_index] = [ data_list[inde_index][0], next_inde_guess ]
@@ -159,108 +127,51 @@ def find_min(data_list, inde_index, depe_index, desired_y, expected_core_mass_fr
             data_list[2] = [ data_list[2][1], final_radius ]
             data_list[3] = [ data_list[3][1], core_mass_frac_ratio ]
 
-        #print(abs( 1 - data_list[depe_index][-1] ), thresh)
-    #print 'data_list_type', type(data_list)
-    #print data_list
+    if inde_index == 1:
+        while abs( core_mass_frac_ratio - 1) > CMFR_thresh:
+            print ('hello, ', abs( core_mass_frac_ratio - 1) )
+            step_size = str( float(step_size) * reduction_factor )
+            print ('step_size: ', step_size )
+
+            final_radius, final_mass, core_mass_frac_ratio = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, pressure, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac )
+
     return data_list, final_radius, final_mass, core_mass_frac_ratio
 
 
 # 0: pressure, 1: Rc, 2: radius, 3: mass
 # 0: pressure, 1: Rc, 2: core_mass_frac_ratio, 3: mass
 
-#data_list = [ [400, 390], [3e8, 3.5e8], [], [] ]
-#data_list = [ [500, 400], [.6, .7], [], [] ]
-#group_list = [ (0, 3), (1, 2) ]  # the usual
-# 0: pressure, 1: Rc, 2: radius, 3: core_mass_frac_ratio
 group_list = [ (0, 2), (1, 3)]
-
 
 found_min = False
 desired_y = 1.
 
-#expected_core_mass_frac_list = [str(x) for x in np.arange(.2, 1, .2)]
 expected_core_mass_frac_list = ['0.295896']
-#Mp_list = [str(x) for x in np.arange(1, 20, 1)]
-#Mp_list = ['1']
+
 mass_p = earth_mass
-#Rp_list = ['.6', '.7', '.8', '2']
-#Rp_list = np.arange(.6, 2.1, .1)
-#Rp_list = np.arange(.6, 2.1, .01)
-#Rp_list = [.1]
-Rp_list = np.arange(.98, 1, .01)
-#Rp_list = np.arange(1, 1.3, .01)
-#Rp_list = np.arange(1.6, 1.7, .01)
+
+#Rp_list = np.arange(.2, 1.4, .1)
+Rp_list = np.arange(.25, 1.45, .1)
+#print Rp_list
+#Rp_list = np.arange(1.4, 2.3, .1)
+#Rp_list = np.arange(1.45, 2.35, .1)
 
 for expected_core_mass_frac in expected_core_mass_frac_list:
-    #for Mp in Mp_list:
     for Rp in Rp_list:
-        #mass_p =str(float(Mp)*float(earth_mass))
         radius_p = str(float(Rp)*float(earth_radius))   # expected planet radius
-        #data_list = [ [4000, 5000], [.8, .9], [], [] ]
-        #data_list = [ [2000, 2200], [8e8, 9e8], [], [] ]
-        data_list = [ [1., 10.], [2e6, 3e6], [], [] ]
-        #data_list = [ [282.349805827, 290], [303922081, 403922081], [], [] ]
-        #data_list = [ [900, 1000], [2e8, 3e8], [], [] ]
-        #data_list = [ [2000, 3000], [2e8, 3e8], [], []]
+        data_list = [ [10., 20.], [2e7, 3e7], [], [] ]
+        #data_list = [ [390, 400], [335480418.12338907, 334875284.3009298], [], [] ]
+
         while found_min == False:
-            #print('data_list[0][0]: ', data_list[0][0])
             for g in group_list:
                 data_list, final_radius, final_mass, core_mass_frac_ratio = find_min(data_list, g[0], g[1], desired_y, expected_core_mass_frac, radius_p, mass_p)
-            #if data_list[1][0] > 1 or data_list[1][1] > 1:
-            #    found_min = True
-            #    print 'expected_core_mass_frac: {} Mp: {} core radius larger than 1'.format(expected_core_mass_frac, Mp)
-
-            '''
-            print('Finding best pressure for core mass frac:\n')
-
-            pressure_1 = data_list[0][0]
-            pressure_2 = data_list[0][1]
-
-
-            found_best_core_mass_frac = False
-            while found_best_core_mass_frac == False:
-                #pressure_1 = data_list[0][0]
-                #pressure_2 = data_list[0][1]
-                #print('pressure_1: ', pressure_1)
-                #print('pressure_2: ', pressure_2)
-                radii_list = str( data_list[1][1] )
-                #radii_list = core_boundary + str( data_list[1][1] )
-                #print('radii_list: ', radii_list)
-
-                final_radius_1, final_mass_1, core_mass_frac_ratio_1 = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, pressure_1, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac )
-                final_radius_2, final_mass_2, core_mass_frac_ratio_2 = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, pressure_2, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac )
-
-                #print('CMFR_1: ', core_mass_frac_ratio_1)
-                #print('CMFR_2: ', core_mass_frac_ratio_2)
-
-                next_pressure_guess = lin_inter( [pressure_1, pressure_2], [core_mass_frac_ratio_1, core_mass_frac_ratio_2], desired_y )
-                #print('next_pressure_guess: ', next_pressure_guess)
-
-                if abs(desired_y - core_mass_frac_ratio_1) < abs(desired_y - core_mass_frac_ratio_2):
-                    pressure_2 = next_pressure_guess
-                else:
-                    pressure_1 = next_pressure_guess
-
-                final_radius, final_mass, core_mass_frac_ratio = run_integrator( args.file_name, num_layers, radii_list, rho_list, K_list, next_pressure_guess, step_size, algorithm, eos, radius_p, mass_p, expected_core_mass_frac )
-
-                print('Pressure: {}, core_mass_frac_ratio: {}'.format(next_pressure_guess, core_mass_frac_ratio))
-
-                if abs(desired_y - core_mass_frac_ratio_1) < thresh or abs(desired_y - core_mass_frac_ratio_2) < thresh:
-                    found_best_core_mass_frac = True
-
-            data_list[0][0] = next_pressure_guess
-            data_list[2][0] = final_radius
-            data_list[3][0] = final_mass
-            print('data_list[0][0]: ', data_list[0][0])
-            '''
 
             if abs(desired_y - data_list[2][-1]) < thresh and abs(desired_y - data_list[3][-1]) < thresh:
                 found_min = True
-                final_radius = float(final_radius) * float(earth_radius)
+                #final_radius = float(final_radius) * float(earth_radius) # this is wrong
+                final_radius = float(final_radius) * float(radius_p)
                 final_mass = float(final_mass) * float(earth_mass)
-                #print 'mass: {}'.format(final_mass)
-                print 'expected_Rp: {} radius: {} mass: {}'.format(radius_p, final_radius, final_mass)
-                #print 'central pressure: {} core radius: {}'.format(data_list[0][1], data_list[1][1])
-                #print 'expected_core_mass_frac: {} Mp: {} radius (in Earth radius): {} mass (in Earth mass): {} core_mass_frac_ratio: {}'.format(expected_core_mass_frac, mass_p, final_radius, final_mass, core_mass_frac_ratio)
-
+                core_mass_frac_ratio = float(core_mass_frac_ratio) * float(expected_core_mass_frac)
+                print 'expected_Rp: {} radius: {} mass: {} CMF: {}'.format(radius_p, final_radius, final_mass, core_mass_frac_ratio)
+                print data_list
         found_min = False

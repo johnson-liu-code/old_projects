@@ -56,6 +56,18 @@ int main(int argc, char* argv[])
     bool print_meas = false;
     bool starting_euler = false;
     
+//    string radii_input = "1e8";                                                                // List of the layer radii.
+//    string rho_input = "7.85x3.98";                                                                 // List of the densities at zero pressure.
+//    string K_input = "255x206";
+//    double pressure = 10;                                                           // (GPa) The pressure at the center of the planet.
+//    double delta_r = 1e4;  
+//    string integrator = "r";                                                                     // Select (e)uler, (r)unge-kutta 4th order, or euler-(c)romer.
+//    string eos = "z";
+//    
+//    double expected_radius = 1e6;
+//    double expected_mass = 1e28;
+//    double expected_core_mass_frac = .2;
+    
     for (int i = 1; i < argc; i++)
     {
         if (string(argv[i]) == "-p")
@@ -201,8 +213,8 @@ int main(int argc, char* argv[])
 //    printf("radius_ratio: %.10g    mass_ratio: %.10g    core_mass_frac_ratio: %.10g\n", radius_ratio, mass_ratio, core_mass_frac_ratio);
 //    printf("radius_ratio: %.10g    mass_ratio: %.10g    core_mass_frac_ratio: %.10g\n", radius_ratio, mass_ratio, core_mass_frac_ratio);
     
-    typedef numeric_limits< double > dbl;
-    
-    cout.precision(dbl::max_digits10);
-    cout << "radius_ratio: " << radius_ratio << "    mass_ratio: " << mass_ratio << "    core_mass_frac_ration: " << core_mass_frac_ratio << endl;
+//    typedef numeric_limits< double > dbl;
+    printf("radius_ratio:%.10g  mass_ratio:%.10g    core_mass_frac_ratio:%.10g\n", radius_ratio, mass_ratio, core_mass_frac_ratio);
+//    cout.precision(dbl::max_digits10);
+//    cout << "radius_ratio: " << radius_ratio << "    mass_ratio: " << mass_ratio << "    core_mass_frac_ratio: " << core_mass_frac_ratio << endl;
 }

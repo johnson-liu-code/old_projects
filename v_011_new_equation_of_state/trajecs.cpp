@@ -126,7 +126,7 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
 //        else if (number_of_layers == 2)
         if (number_of_layers == 2)
         {
-            if (section < radii_list.size())
+            if (section < 1)
             {
 //                printf("hello\n");
 //                if (r > radii_list[section]*Rp)
@@ -134,7 +134,7 @@ vector<double> run_trajectory(double number_of_layers, bool print_meas, double p
 //                printf("radii_list[0]: %f\n", radii_list[0]);
                 mass_iron = mass;
 
-                if (r > radii_list[section])
+                if (r > radii_list[0])
 //                if (mass > mass_core)
                 {
                     double r_boundary = radii_list[section];
