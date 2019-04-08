@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="U1_code" Database="" Version="10.0.0">
+  <Project Name="U1_code" Path="U1_code/U1_code.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="U1_code" ConfigName="Debug"/>
+      <Project Name="FFTW_tutorial" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
+      <Project Name="U1_code" ConfigName="Release"/>
+      <Project Name="FFTW_tutorial" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
