@@ -13,7 +13,7 @@ const double D = 52078;
 const double h = 6.62607004e-34;
 const double c = 2.99792458e8;
 const double A = 1.e-10;
-const double DD = D * (h*c) / .01 * 1.e10 * 1.e10;
+const double DD = D * (h*c) * 1.e10 * 1.e10;
 const double a = 2.1501;
 //const double aa = a / A;
 const double re = .917;
@@ -37,9 +37,10 @@ double V(double *r)
         rSqd += r[d] * r[d];
     }
     double dist = sqrt(rSqd);
-    cout << DD << endl;
+    //cout << dist << endl;
+    //cout << DD << endl;
     double morse = DD * pow( (1 - exp(-a * (dist - re) ) ), 2 );
-    cout << morse << endl;
+    //cout << morse << endl;
     return morse;
 }
 
@@ -88,8 +89,8 @@ void ensureCapacity(int index) {
 // observables
 double ESum;                   // accumulator for energy
 double ESqdSum;                // accumulator for variance
-double rMax = 4;               // max value of r to measure psi
-const int NPSI = 100;          // number of bins for wave function
+double rMax = 25;               // max value of r to measure psi
+const int NPSI = 1000;          // number of bins for wave function
 double psi[NPSI];              // wave function histogram
 
 void zeroAccumulators() {
