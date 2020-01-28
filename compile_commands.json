@@ -1,0 +1,97 @@
+[{
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/v_011.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/v_011.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/v_011.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/zeng_eos.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/zeng_eos.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/zeng_eos.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/bme_eos.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/bme_eos.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/bme_eos.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/bme_eos.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/bme_eos.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/bme_eos.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/rk4.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/rk4.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/rk4.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/trajecs.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/trajecs.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/trajecs.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_quadratic.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_quadratic.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_quadratic.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/invert_3x3_matrix.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/invert_3x3_matrix.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/invert_3x3_matrix.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/compute_pressure_mass.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/compute_pressure_mass.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/compute_pressure_mass.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_2x2_matrix.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_2x2_matrix.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_2x2_matrix.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_2x2_matrix.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_2x2_matrix.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_2x2_matrix.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/trajecs.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/trajecs.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/trajecs.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/rk4.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/rk4.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/rk4.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/vinet_eos.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/vinet_eos.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/vinet_eos.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/interpolate_surface.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/interpolate_surface.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/interpolate_surface.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/zeng_eos.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/zeng_eos.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/zeng_eos.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_quadratic.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_quadratic.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/solve_quadratic.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/invert_3x3_matrix.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/invert_3x3_matrix.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/invert_3x3_matrix.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/euler.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/euler.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/euler.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/vinet_eos.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/vinet_eos.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/vinet_eos.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/v_011_save",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/v_011_save -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/v_011_save.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/interpolate_surface.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/interpolate_surface.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/interpolate_surface.h.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/euler.cpp",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/euler.cpp -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/euler.cpp.o  -I. -I.  -g  -O0  -Wall"
+ }, {
+  "file": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/compute_pressure_mass.h",
+  "directory": "/home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011",
+  "command": "clang  -c /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/compute_pressure_mass.h -o /home/jliu/Desktop/files/research/modeling_the_interior_of_exoplanets/v_011/compute_pressure_mass.h.o  -I. -I.  -g  -O0  -Wall"
+ }]

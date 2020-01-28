@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Session Name="/home/jliu/Desktop/files/research/planet_simulator/v_011_new_equation_of_state/v_011_new_equation_of_state.project">
+  <int Value="0" Name="m_selectedTab"/>
+  <wxString Value="/home/jliu/Desktop/files/research/planet_simulator/v_011_new_equation_of_state/v_011_new_equation_of_state.project" Name="m_workspaceName"/>
+  <TabInfoArray Name="TabInfoArray"/>
+  <SerializedObject Name="m_breakpoints">
+    <long Value="0" Name="Count"/>
+  </SerializedObject>
+  <wxString Value="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.inc;*.mm;*.m;*.xrc" Name="m_findInFilesMask"/>
+</Session>
