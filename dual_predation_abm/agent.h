@@ -3,14 +3,14 @@
 
 #include<string>
 
-/* ------------ Create Agent class. ------------ */
+/* ------------ Agent class. ------------ */
 class Agent
 {
 public:
     // Default constructor.
     Agent()
     {
-        // this->org = "generic";
+
     }
     // Constructor to take in the x and y coordinates of the agent, the agent's ID, and the agent's name.
     Agent(int i, int j, int num, std::string org)
@@ -19,6 +19,9 @@ public:
         this->j = j;
         this->num = num;
         this->org = org;
+        // All agents start out unmoved. This variable keeps track of whether or not an agent has moved
+        //  when in the part of the simulation where agents and particles move from their node to
+        //  neighboring nodes.
         this->moved = false;
     }
 
@@ -74,7 +77,7 @@ public:
 
     int i, j, num;      // x and y location and agent ID.
     std::string org;    // Agent name. (Includes the type of organism, the agent's location, and the agent's ID)
-    bool moved;
+    bool moved;         // Whether or not the agent has moved during a step in the simulation.
 };
 
 #endif

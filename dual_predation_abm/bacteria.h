@@ -3,7 +3,7 @@
 
 #include "agent.h"
 
-/* ------------ Create Bacteria class. ------------ */
+/* ------------ Bacteria class. ------------ */
 // Bacteria is derived from Agent.
 class Bacteria: public Agent
 {

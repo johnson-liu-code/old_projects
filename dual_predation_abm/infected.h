@@ -3,7 +3,7 @@
 
 #include "ecoli.h"
 
-/* ------------ Create Infected class. ------------ */
+/* ------------ Infected class. ------------ */
 // Infected is derived from Ecoli.
 class Infected: public Ecoli
 {

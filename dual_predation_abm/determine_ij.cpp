@@ -3,6 +3,9 @@
 #include<vector>
 
 
+// Return the indices of the neighboring nodes given a specific node on the lattice.
+//  The code deals with wrap-around when moving over the edge of the lattice. The
+//  lattice is modeled as a torus.
 std::vector<int> determine_ij(int i, int j, int x_len, int y_len)
 {
     int i_up, i_down, j_left, j_right;

@@ -3,7 +3,7 @@
 
 #include "agent.h"
 
-/* ------------ Create Virus class. ------------ */
+/* ------------ Virus class. ------------ */
 // Virus is derived from Agent.
 class Virus: public Agent
 {
