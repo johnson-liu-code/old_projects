@@ -43,7 +43,7 @@ public:
     {
         return this->attack_rate;
     }
-    // Set the bdelloplate incubation period.
+    // Set the bdelloplast incubation period.
     void set_bdelloplast_incubation_period(int bdelloplast_incubation_period)
     {
         this->bdelloplast_incubation_period = bdelloplast_incubation_period;

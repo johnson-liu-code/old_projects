@@ -85,7 +85,7 @@ public:
         return this->bacteriovorous_resistant;
     }
 
-    int energy = 0;
+    double energy = 0;
     bool phage_resistant;           // Whether or not the ecoli is resistant to viral infection. true/false
     bool bacteriovorous_resistant;   // Whether or not the ecoli is resistant to bacteriovorous predation. true/false
 };

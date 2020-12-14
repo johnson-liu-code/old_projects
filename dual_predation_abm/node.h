@@ -7,6 +7,7 @@
 #include<numeric>
 #include<algorithm>
 
+#include "agent.h"
 #include "ecoli.h"
 #include "bdelloplast.h"
 #include "infected.h"
@@ -26,12 +27,30 @@ public:
 
     // Constructor to take in the node's x and y location as well as the initial amounts of nutrients, Ecoli cells,
     //  bdelloplasts, infected, viruses, and bacteriovori in the node.
-    node(int i, int j, int init_nutrients, int init_ecoli_in_node, int init_bdelloplast_in_node,
-        int init_infected_in_node, int init_virus_in_node, int init_bacteriovorous_in_node)
+    node(int i, int j, double init_nutrients, int init_ecoli_in_node, int init_bdelloplast_in_node,
+        int init_infected_in_node, int init_virus_in_node, int init_bacteriovorous_in_node,
+        double phage_resistance_mutation_probability, double phage_resistance_reversion_probability,
+        double bacteriovorous_resistance_mutation_probability,
+        double bacteriovorous_resistance_reversion_probability, double ecoli_max_nutrient_consumption,
+        double ecoli_exist_energy_cost, double ecoli_reproduce_energy_cost, int max_signal_released,
+        int max_bacteriorovorous_released, int max_virus_released)
     {
         this->i = i;
         this->j = j;
         this->nutrients = init_nutrients;
+
+        this->ecoli_max_nutrient_consumption = ecoli_max_nutrient_consumption;
+        this->ecoli_exist_energy_cost = ecoli_exist_energy_cost;
+        this->ecoli_reproduce_energy_cost = ecoli_reproduce_energy_cost;
+
+        this->max_signal_released = max_signal_released;
+        this->max_bacteriorovorous_released = max_bacteriorovorous_released;
+        this->max_virus_released = max_virus_released;
+
+        this->phage_resistance_mutation_probability = phage_resistance_mutation_probability;
+        this->phage_resistance_reversion_probability = phage_resistance_reversion_probability;
+        this->bacteriovorous_resistance_mutation_probability = bacteriovorous_resistance_mutation_probability;
+        this->bacteriovorous_resistance_reversion_probability = bacteriovorous_resistance_reversion_probability;
 
         std::string org;
         // String that contains the x and y location of the node. Used in the naming of the individual agents.
@@ -62,7 +81,7 @@ public:
         // Create a vector of viruses.
         for (int n = 0; n < init_virus_in_node; n++)
         {
-            std::cout << "here" << std::endl;
+            // std::cout << "here" << std::endl;
             org = "Virus_" + mid_string + std::to_string(n);
             Virus virus(i, j, n, org);
             this->add_virus(virus);
@@ -77,19 +96,28 @@ public:
     }
 
     // Various functions.
-    void set_bacteriovorous_cell_attack_rate(int location, double attack_rate);
-    double get_bacteriovorous_cell_attack_rate(int location);
+    void ecoli_consume_nutrients();
+    void iterate_ecoli_die_mutate_reproduce();
+
+    double return_sigmoid_probability();
+
+    void set_bacteriovorous_attack_rate(int location, double attack_rate);
+    double get_bacteriovorous_attack_rate(int location);
     void set_bdelloplast_incubation_period(int location, int bdelloplast_incubation_period);
 
-    void ecoli_consume_nutrients();
-    void iterate_ecoli_mutate_die_reproduce();
+    void set_virus_attack_rate(int location, double attack_rate);
+    double get_virus_attack_rate(int location);
+    void set_infected_incubation_period(int location, int infected_incubation_period);
 
     void bacteriovorous_attack_prey();
     void convert_ecoli_to_bdelloplast(int selected_ecoli_position, Bacteriovorous bacteriovorous);
     void burst_bdelloplasts();
 
     void virus_infect_prey();
-    void convert_ecoli_to_infected(int selected_ecoli_position);
+    void convert_ecoli_to_infected(int selected_ecoli_position, Virus virus);
+    void burst_infected();
+
+    void demove_organisms();
 
     void remove_bacteriovorous(int index);
     void remove_many_bacteriovori(std::vector<int> bacteriovorous_removal_list);
@@ -98,12 +126,25 @@ public:
     void remove_bdelloplast(int index);
     void remove_virus(int index);
     void remove_many_viri(std::vector<int> virus_removal_list);
+    void remove_infected(int index);
 
     void add_ecoli(Ecoli ecoli);
     void add_bdelloplast(Bdelloplast bdelloplast);
     void add_bacteriovorous(Bacteriovorous bacteriovorous);
     void add_virus(Virus virus);
     void add_infected(Infected infected);
+    // void add_particle(P particle);
+
+    // template <typename P>
+    // void add_particle(P particle)
+    // {
+    //     if (particle.org == "ecoli")
+    //     {
+    //         Ecoli ecoli = particle;
+    //         node::add_ecoli(ecoli);
+    //     }
+    //     // elif ()
+    // }
 
     int get_next_available_num(std::string org_type);
 
@@ -157,14 +198,19 @@ public:
     }
 
     // Class members.
-    int i, j, nutrients, signal = 0;
+    int i, j, sigmoid_inflection_point, signal = 0;
+    int max_signal_released, max_bacteriorovorous_released, max_virus_released;
+    double ecoli_exist_energy_cost, ecoli_reproduce_energy_cost;
+    double nutrients, ecoli_max_nutrient_consumption;
     int num_ecoli = 0;
     int num_bdelloplast = 0;
     int num_infected = 0;
     int num_virus = 0;
     int num_bacteriovorous = 0;
-    float phage_resistance_mutation_probability = 1;
-    float phage_resistance_reversion_probability = .5;
+    double phage_resistance_mutation_probability;
+    double phage_resistance_reversion_probability;
+    double bacteriovorous_resistance_mutation_probability;
+    double bacteriovorous_resistance_reversion_probability;
 
     // Vectors that hold the agent objects.
     std::vector<Ecoli> ecoli_list;
@@ -178,7 +224,6 @@ void node::ecoli_consume_nutrients()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> uni(0, 10);
 
     // std::vector<int> index_vector;
     // for (int i = 0; i < this->num_ecoli; i++)
@@ -187,10 +232,11 @@ void node::ecoli_consume_nutrients()
     // }
     std::vector<int> index_vector(this->num_ecoli);
     std::iota(std::begin(index_vector), std::end(index_vector), 0);
-
     std::random_shuffle(index_vector.begin(), index_vector.end());
 
-    int nutrients_consumed;
+    double rand_num;
+    double nutrients_consumed;
+    std::uniform_real_distribution<> dis(0, this->ecoli_max_nutrient_consumption);
 
     for (int i = 0; i < this->num_ecoli; i++)
     {
@@ -200,20 +246,27 @@ void node::ecoli_consume_nutrients()
         }
         else
         {
-            std::cout << "index vector element: " << index_vector[i] << std::endl;
-            nutrients_consumed = uni(gen);
+            // std::cout << "index vector element: " << index_vector[i] << std::endl;
+            rand_num = dis(gen);
+            // std::cout << "rand_num: " << rand_num << std::endl;
+            nutrients_consumed = std::min(this->nutrients, rand_num);
+
+            // std::cout << "nutrients consumed: " << nutrients_consumed << std::endl;
             this->nutrients -= nutrients_consumed;
-            this->ecoli_list[index_vector[i]].add_energy(nutrients_consumed);
-            if (this->nutrients <= 0)
-            {
-                this->ecoli_list[index_vector[i]].remove_energy(std::abs(this->nutrients));
-            }
-            std::cout << "nutrients: " << this->nutrients << std::endl;
+            this->ecoli_list[index_vector[i]].energy += nutrients_consumed;
+            // if (this->nutrients <= 0)
+            // {
+            //     this->ecoli_list[index_vector[i]].energy -= std::abs(this->nutrients);
+            // }
+            // std::cout << "nutrients: " << this->nutrients << std::endl;
         }
     }
 }
-
-void node::iterate_ecoli_mutate_die_reproduce()
+double node::return_sigmoid_probability()
+{
+    return 1 / ( 1 + exp(-(this->signal - this->sigmoid_inflection_point) ) );
+}
+void node::iterate_ecoli_die_mutate_reproduce()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -225,65 +278,114 @@ void node::iterate_ecoli_mutate_die_reproduce()
     std::vector<int> ecoli_reproduce_list;
     std::vector<int> ecoli_death_list;
 
+    double sigmod_probability;
+    double adjusted_rand;
     int energy;
+    bool bacteriovorous_resistant;
 
+    // Iterate over the Ecoli cells to kill off cells without energy energy and
+    //  to perform mutations.
     for (int i = 0; i < this->num_ecoli; i++)
     {
-        rand_num = dis(gen);
-
-        if (rand_num < this->phage_resistance_mutation_probability)
-        {
-            this->ecoli_list[i].phage_resistant = true;
-        }
-        if (rand_num < this->phage_resistance_reversion_probability)
-        {
-            this->ecoli_list[i].phage_resistant = false;
-        }
-
+        // Get the energy of the Ecoli cell.
         energy = this->ecoli_list[i].energy;
-
+        energy = energy - this->ecoli_exist_energy_cost;
+        // Ecoli cell death due to lack of energy;
         if (energy <= 0)
         {
             ecoli_death_list.push_back(i);
         }
-        else if (energy >= 20)
+        else
         {
-            ecoli_reproduce_list.push_back(i);
+            // Phage resistance mutations.
+            rand_num = dis(gen);
+            if (this->ecoli_list[i].bacteriovorous_resistant == false)
+            {
+                if(this->ecoli_list[i].phage_resistant == false)
+                {
+                    sigmod_probability = this->return_sigmoid_probability();
+                    adjusted_rand = rand_num + sigmod_probability;
+                    if (adjusted_rand <= this->bacteriovorous_resistance_mutation_probability)
+                    {
+                        this->ecoli_list[i].bacteriovorous_resistant = true;
+                    }
+                }
+            }
+            else if(this->ecoli_list[i].bacteriovorous_resistant == true)
+            {
+                if (rand_num <= this->bacteriovorous_resistance_reversion_probability)
+                {
+                    this->ecoli_list[i].bacteriovorous_resistant = false;
+                }
+            }
+
+            rand_num = dis(gen);
+            if (this->ecoli_list[i].phage_resistant == false)
+            {
+                if (this->ecoli_list[i].bacteriovorous_resistant == false)
+                {
+                    if (rand_num <= this->phage_resistance_mutation_probability)
+                    {
+                        this->ecoli_list[i].phage_resistant = true;
+                    }
+                }
+            }
+            else if(this->ecoli_list[i].phage_resistant == true)
+            {
+                if (rand_num <= this->phage_resistance_reversion_probability)
+                {
+                    this->ecoli_list[i].phage_resistant = false;
+                }
+            }
+        }
+        // Make a list of all of the Ecoli cells that have enough energy to reproduce.
+        if (energy >= 20)
+        {
+            // Only allow the Ecoli cell to reproduce if it is not
+            //  bacteriovorous resistant.
+            bacteriovorous_resistant = this->ecoli_list[i].bacteriovorous_resistant;
+            if (bacteriovorous_resistant == false)
+            {
+                ecoli_reproduce_list.push_back(i);
+            }
         }
     }
 
     this->remove_many_ecoli(ecoli_death_list);
-
     int i, j, num;
     std::string org;
-    bool phage_resistant, bacteriovorous_resistant;
+    bool phage_resistant;
     Ecoli ecoli;
+    double split_energy;
 
-    for (int j = 0; j < ecoli_reproduce_list.size(); j++)
+    // Have the Ecoli cells reproduce.
+    for (int k = 0; k < ecoli_reproduce_list.size(); k++)
     {
-        ecoli = this->ecoli_list[ecoli_reproduce_list[j]];
+        ecoli = this->ecoli_list[ecoli_reproduce_list[k]];
         i = ecoli.i;
         j = ecoli.j;
         org = ecoli.org;
         num = this->get_next_available_num(org);
         phage_resistant = ecoli.phage_resistant;
-        bacteriovorous_resistant = ecoli.bacteriovorous_resistant;
-
+        bacteriovorous_resistant = false;
+        energy = ecoli.energy - this->ecoli_reproduce_energy_cost;
+        split_energy = energy/2;
+        ecoli.energy = split_energy;
         Ecoli ecoli(i, j, num, org, phage_resistant, bacteriovorous_resistant);
-        ecoli.add_energy(10);
-        this->ecoli_list[ecoli_reproduce_list[j]].remove_energy(10);
+        // ecoli.add_energy(split_energy);
+        // this->ecoli_list[ecoli_reproduce_list[j]].remove_energy(split_energy);
 
         this->add_ecoli(ecoli);
     }
 }
 
 // Set the attack rate for a specific bacteriovorous cell in the node.
-void node::set_bacteriovorous_cell_attack_rate(int location, double attack_rate)
+void node::set_bacteriovorous_attack_rate(int location, double attack_rate)
 {
     this->bacteriovorous_list[location].set_attack_rate(attack_rate);
 }
 // Get the attack rate for a specific bacteriovorous cell in the node.
-double node::get_bacteriovorous_cell_attack_rate(int location)
+double node::get_bacteriovorous_attack_rate(int location)
 {
     return this->bacteriovorous_list[location].attack_rate;
 }
@@ -291,6 +393,22 @@ double node::get_bacteriovorous_cell_attack_rate(int location)
 void node::set_bdelloplast_incubation_period(int location, int bdelloplast_incubation_period)
 {
     this->bacteriovorous_list[location].set_bdelloplast_incubation_period(bdelloplast_incubation_period);
+}
+
+// Set the attack rate for a specific virus cell in the node.
+void node::set_virus_attack_rate(int location, double attack_rate)
+{
+    this->virus_list[location].set_attack_rate(attack_rate);
+}
+// Get the attack rate for a specific virus cell in the node.
+double node::get_virus_attack_rate(int location)
+{
+    return this->virus_list[location].attack_rate;
+}
+// Set the bdelloplast incubation period for a specific bacteriovorous cell in the node.
+void node::set_infected_incubation_period(int location, int infected_incubation_period)
+{
+    this->virus_list[location].set_infected_incubation_period(infected_incubation_period);
 }
 
 // Add a bdelloplast cell to the node and remove the affected Ecoli cell.
@@ -347,7 +465,7 @@ void node::bacteriovorous_attack_prey()
             // Generate random integer to select an Ecoli cell to attack.
             std::uniform_int_distribution<int> uni(0, this->num_ecoli - 1);
             selected_ecoli_position = uni(gen);
-            std::cout << "selected_ecoli_position: " << selected_ecoli_position << std::endl;
+            // std::cout << "selected_ecoli_position: " << selected_ecoli_position << std::endl;
 
             // Check to see if the Ecoli cell is resistant to the bacteriovorous.
             if (this->ecoli_list[selected_ecoli_position].bacteriovorous_resistant == false )
@@ -376,7 +494,8 @@ void node::burst_bdelloplasts()
     // Set up random number generator.
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> uni(0, 10);
+    std::uniform_int_distribution<int> uni1(1, this->max_signal_released);
+    std::uniform_int_distribution<int> uni2(0, this->max_bacteriorovorous_released);
 
     // Create vector to store the positions of the bdelloplasts marked for destruction.
     std::vector<int> bdelloplast_burst_list;
@@ -407,6 +526,8 @@ void node::burst_bdelloplasts()
         }
     }
 
+    int num_bacteriovorous_added = uni2(gen);
+
     // Iterate over the positions of the bdelloplasts marked for destruction.
     for (int k = 0; k < bdelloplast_burst_list.size(); k++)
     {
@@ -422,22 +543,30 @@ void node::burst_bdelloplasts()
             bacteriovorous_attack_rate, bdelloplast_incubation_period,
             bacteriovorous_mortality_rate);
 
-        // Add the new bacteriovorous cell to the node.
-        this->add_bacteriovorous(bacteriovorous);
+        num_bacteriovorous_added = uni2(gen);
+
+        // Add the new bacteriovorous cell(s) to the node.
+        for (int i = 0; i < num_bacteriovorous_added; i++)
+        {
+            this->add_bacteriovorous(bacteriovorous);
+        }
         // Remove the bdelloplast cell.
         this->remove_bdelloplast(bdelloplast_burst_list[k]);
 
         // Add a random number of signal molecules to the node.
-        this->signal += uni(gen);
+        this->signal += uni1(gen);
     }
 }
 
 // Function to convert an Ecoli cell to an infected cell.
-void node::convert_ecoli_to_infected(int selected_ecoli_position)
+void node::convert_ecoli_to_infected(int selected_ecoli_position, Virus virus)
 {
     std::string org = "virus";
     // Create new infected cell.
-    Infected infected(this->i, this->j, this->ecoli_list[selected_ecoli_position].num, org);
+
+    Infected infected(this->i, this->j, this->ecoli_list[selected_ecoli_position].num,
+        org, virus.infected_incubation_period, virus.attack_rate);
+
     // Add the infected cell to the node.
     this->add_infected(infected);
     // Remove the Ecoli cell from the node.
@@ -450,34 +579,51 @@ void node::virus_infect_prey()
     std::random_device rd;
     std::mt19937 gen(rd());
 
+    // dis(min, max) gives a uniform random number between min and max.
+    std::uniform_real_distribution<> dis(0, 1);
+
     // Vector to store the locations of the viruses to be removed.
     std::vector<int> virus_remove_list;
 
+    // Declare a variable to store a random number.
+    double rand_num;
     // Declare a variable to store the position of the selected Ecoli cell.
     int selected_ecoli_position;
 
     // Iterate over the viruses in the node.
     for (int n = 0; n < this->num_virus; n++)
     {
+        // std::cout << "n: " << n << std::endl;
         // If there are no Ecoli cells left in the node, break out of the iteration.
         if (this->num_ecoli == 0)
         {
             break;
         }
 
-        // Generate random integer to select an Ecoli cell to attack.
-        std::uniform_int_distribution<int> uni(0, this->num_ecoli - 1);
-        selected_ecoli_position = uni(gen);
-        std::cout << "selected_ecoli_position: " << selected_ecoli_position << std::endl;
+        // Get random number between 0 and 1.
+        rand_num = dis(gen);
 
-        // Check to see if the Ecoli cell is resistant to attacks by the virus.
-        if (this->ecoli_list[selected_ecoli_position].phage_resistant == false )
+        // std::cout << "rand_num: " << rand_num << std::endl;
+        // std::cout << "attack rate: " << this->virus_list[n].attack_rate << std::endl;
+
+        if (rand_num <= this->virus_list[n].attack_rate)
         {
-            // Remove the Ecoli cell from the node and add an infected cell to the node.
-            this->convert_ecoli_to_infected(selected_ecoli_position);
+            // Generate random integer to select an Ecoli cell to attack.
+            std::uniform_int_distribution<int> uni(0, this->num_ecoli - 1);
+            selected_ecoli_position = uni(gen);
+            // std::cout << "selected_ecoli_position: " << selected_ecoli_position << std::endl;
 
-            // Record the location of the virus to be removed.
-            virus_remove_list.push_back(n);
+            // Check to see if the Ecoli cell is resistant to attacks by the virus.
+            if (this->ecoli_list[selected_ecoli_position].phage_resistant == false )
+            {
+                // Remove the Ecoli cell from the node and add an infected cell to the node.
+                // std::cout << "virus attack" << std::endl;
+                this->convert_ecoli_to_infected(selected_ecoli_position,
+                    this->virus_list[n]);
+
+                // Record the location of the virus to be removed.
+                virus_remove_list.push_back(n);
+            }
         }
     }
 
@@ -487,6 +633,83 @@ void node::virus_infect_prey()
     //     this->remove_virus(virus_remove_list[k]);
     // }
     this->remove_many_viri(virus_remove_list);
+}
+
+void node::burst_infected()
+{
+    // Set up random number generator.
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> uni(0, this->max_virus_released);
+
+    // Create vector to store the positions of the infected Ecoli cells marked for destruction.
+    std::vector<int> infected_burst_list;
+    Infected infected;
+
+    // Declare variables.
+    double virus_attack_rate;
+    int infected_incubation_period;
+    int num_virus_released;
+
+    int num = 0;
+    std::string org = "place_holder";
+
+    // Iterate over the infected Ecoli cells in the node.
+    for (int n = 0; n < this->num_infected; n++)
+    {
+        // Check to see if the amount of time that the infected Ecoli cell has been alive is equal
+        //  to its incubation period.
+        if (this->infected_list[n].time_alive == this->infected_list[n].infected_incubation_period)
+        {
+            // Add the infected Ecoli cell's position to the destruction vector.
+            infected_burst_list.push_back(n);
+        }
+        else
+        {
+            // Increment the amount of time that the infected Ecoli cell has been alive.
+            this->infected_list[n].time_alive++;
+        }
+    }
+
+    // Iterate over the positions of the infected Ecoli cells marked for destruction.
+    for (int k = 0; k < infected_burst_list.size(); k++)
+    {
+        // Assign various values to variables.
+        infected = this->infected_list[infected_burst_list[k]];
+        virus_attack_rate = infected.virus_attack_rate;
+        infected_incubation_period = infected.infected_incubation_period;
+
+        // Create a new virus (should allow for multiple individuals to be
+        //  created).
+        Virus virus(this->i, this->j, num, org, virus_attack_rate, infected_incubation_period);
+
+        num_virus_released = uni(gen);
+
+        // Add the new virus to the node.
+        for (int i = 0; i < num_virus_released; i++)
+        {
+            this->add_virus(virus);
+        }
+        // Remove the infected Ecoli cell.
+        this->remove_infected(infected_burst_list[k]);
+    }
+}
+
+void node::demove_organisms()
+{
+    for (int i = 0; i < this->num_ecoli; i++)
+    {
+        this->ecoli_list[i].moved = false;
+    }
+    for (int i = 0; i < this->num_bacteriovorous; i++)
+    {
+        this->bacteriovorous_list[i].moved = false;
+    }
+    for (int i = 0; i < this->num_virus; i++)
+    {
+        this->virus_list[i].moved = false;
+    }
+
 }
 
 // Function to remove an Ecoli cell from the Ecoli vector based on the intended index.
@@ -502,7 +725,7 @@ void node::remove_many_ecoli(std::vector<int> ecoli_removal_list)
 
     for (int i = 0; i < ecoli_removal_list.size(); i++)
     {
-        std::cout << "removing ecoli " << std::endl;
+        // std::cout << "removing ecoli " << std::endl;
         this->remove_ecoli(ecoli_removal_list[i]);
     }
 }
@@ -519,6 +742,7 @@ void node::remove_many_bacteriovori(std::vector<int> bacteriovorous_removal_list
 
     for (int i = 0; i < bacteriovorous_removal_list.size(); i++)
     {
+        // std::cout << "removing bacteriovorous, i: " << i << ", index:" << bacteriovorous_removal_list[i] << std::endl;
         this->remove_bacteriovorous(bacteriovorous_removal_list[i]);
     }
 }
@@ -542,8 +766,15 @@ void node::remove_many_viri(std::vector<int> virus_removal_list)
 
     for (int i = 0; i < virus_removal_list.size(); i++)
     {
+        // std::cout << "removing virus " << std::endl;
         this->remove_virus(virus_removal_list[i]);
     }
+}
+void node::remove_infected(int index)
+{
+    this->infected_list.erase(this->infected_list.begin() + index);
+    // Decrement the number of infected Ecoli cells in the node.
+    this->num_infected--;
 }
 // Function to add an Ecoli cell to the Ecoli vector.
 void node::add_ecoli(Ecoli ecoli)

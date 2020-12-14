@@ -18,6 +18,17 @@ public:
     {
 
     }
+    Infected(int i, int j, int num, std::string org, double attack_rate, int infected_incubation_period)
+        : Ecoli(i, j, num, org), virus_attack_rate(attack_rate), infected_incubation_period(infected_incubation_period)
+    {
+        this->virus_attack_rate = attack_rate;
+        this->infected_incubation_period = infected_incubation_period;
+        this->time_alive = 0;
+    }
+
+    double virus_attack_rate;
+    int infected_incubation_period;
+    int time_alive;
 };
 
 #endif
