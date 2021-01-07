@@ -16,34 +16,29 @@ public:
         this->bacteriovorous_resistant = false;
     }
 
-    // Constructor to take in the x and y coordinates of the ecoli, the ecoli's ID, and the ecoli's name.
-    Ecoli(int i, int j, int num, std::string org) : Bacteria(i, j, num, org)
+    // Constructor to take in the x and y coordinates of the Ecoli cell.
+    Ecoli(int i, int j) : Bacteria(i, j)
     {
         this->i = i;
         this->j = j;
-        this->num = num;
-        this->org = org;
         // Ecoli agent is not phage resistant nor bacteriovorous resistant by default.
         this->phage_resistant = false;
         this->bacteriovorous_resistant = false;
     }
-    // Constructor to take in the x and y coordinates of the Ecoli, the Ecoli's ID, the Ecoli's name,
-    //  the Ecoli's phage resistance, and the Ecoli's bacteriovorous resistance.
-    Ecoli(int i, int j, int num, std::string org, bool phage_resistant, bool bacteriovorous_resistant)
-        : Bacteria(i, j, num, org), phage_resistant(phage_resistant), bacteriovorous_resistant(bacteriovorous_resistant)
+    // Constructor to take in the x and y coordinates of the Ecoli, the Ecoli's phage
+    //  resistance, and the Ecoli's bacteriovorous resistance.
+    Ecoli(int i, int j, bool phage_resistant, bool bacteriovorous_resistant)
+        : Bacteria(i, j), phage_resistant(phage_resistant), bacteriovorous_resistant(bacteriovorous_resistant)
     {
         this->i = i;
         this->j = j;
-        this->num = num;
-        this->org = org;
         this->phage_resistant = phage_resistant;
         this->bacteriovorous_resistant = bacteriovorous_resistant;
     }
 
-    // Print the ecoli's name, location, phage resistance, and bacteriovorous resistance.
+    // Print the Ecoli cell's location, phage resistance, and bacteriovorous resistance.
     void print_me()
     {
-        std::cout << "Organism: " << this->org << std::endl;
         std::cout << "node: " << this->i << "_" << this->j << std::endl;
         std::cout << "Phage resistant: " << this->phage_resistant << std::endl;
         std::cout << "bacteriovorous resistant: " << this->bacteriovorous_resistant << std::endl;

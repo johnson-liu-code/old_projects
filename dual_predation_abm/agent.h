@@ -12,13 +12,11 @@ public:
     {
 
     }
-    // Constructor to take in the x and y coordinates of the agent, the agent's ID, and the agent's name.
-    Agent(int i, int j, int num, std::string org)
+    // Constructor to take in the x and y coordinates of the agent.
+    Agent(int i, int j)
     {
         this->i = i;
         this->j = j;
-        this->num = num;
-        this->org = org;
         // All agents start out unmoved. This variable keeps track of whether or not an agent has moved
         //  when in the part of the simulation where agents and particles move from their node to
         //  neighboring nodes.
@@ -28,7 +26,6 @@ public:
     // Print the agent's name and location.
     void print_me()
     {
-        std::cout << "Organism: " << this->org << std::endl;
         std::cout << "node: " << this->i << "_" << this->j << std::endl;
         std::cout << "##########################################################################" << std::endl;
     }
@@ -43,17 +40,6 @@ public:
     {
         this->j = j;
     }
-    // Set the agent's ID.
-    void set_num(int num)
-    {
-        this->num = num;
-    }
-    // Set the agent's name.
-    void set_org(std::string org)
-    {
-        this->org = org;
-    }
-
     // Return the agent's x location.
     int get_i()
     {
@@ -64,19 +50,8 @@ public:
     {
         return this->j;
     }
-    // Return the agent's ID.
-    int get_num()
-    {
-        return this->num;
-    }
-    // Return the agent's name.
-    std::string get_org()
-    {
-        return this->org;
-    }
 
-    int i, j, num;      // x and y location and agent ID.
-    std::string org;    // Agent name. (Includes the type of organism, the agent's location, and the agent's ID)
+    int i, j;      // x and y location of the agent.
     bool moved;         // Whether or not the agent has moved during a step in the simulation.
 };
 

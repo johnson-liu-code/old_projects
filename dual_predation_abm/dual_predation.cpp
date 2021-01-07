@@ -24,47 +24,48 @@
 int main()
 {
     // The dimensions of the lattice.
-    int x_len = 2;
-    int y_len = 2;
-    int simulation_length = 2;
+    int x_len = 10;
+    int y_len = 10;
+    int simulation_length = 100;
 
     // Initial quantities.
-    double init_nutrients = 100;
+    double init_nutrients = 999999999999999999;
 
-    int init_ecoli_in_node = 10;
+    int init_ecoli_in_node = 40;
     int init_bdelloplast_in_node = 0;
     int init_infected_in_node = 0;
 
-    int init_bacteriovorous_in_node = 4;
-    int init_virus_in_node = 2;
+    int init_bacteriovorous_in_node = 10;
+    int init_virus_in_node = 10;
 
-    double init_ecoli_energy = 50;
-    double ecoli_max_nutrient_consumption = 20;
-    double ecoli_exist_energy_cost = 10;
+    double init_ecoli_energy = 40;
+    double ecoli_max_nutrient_consumption = 10;
+    double ecoli_exist_energy_cost = 20;
     double ecoli_move_energy_cost = 10;
     double ecoli_reproduce_energy_cost = 10;
 
-    // Paramaterizable variables.
-    double bacteriovorous_attack_rate = 1;
-    int bdelloplast_incubation_period = 1;
-    double virus_attack_rate = 1;
-    int infected_incubation_period = 1;
-
-    int max_signal_released = 10;
+    double bacteriovorous_attack_rate = .4;
+    int bacteriovorous_mortality_period = 4;
+    int bdelloplast_incubation_period = 2;
+    int max_signal_released = 2;
     int max_bacteriorovorous_released = 4;
+
+    double virus_attack_rate = .4;
+    int infected_incubation_period = 2;
     int max_virus_released = 4;
 
-    double phage_resistance_mutation_probability = 1;
-    double phage_resistance_reversion_probability = 1;
-    double bacteriovorous_resistance_mutation_probability = 1;
-    double bacteriovorous_resistance_reversion_probability = 1;
+    double bacteriovorous_resistance_mutation_probability = .9;
+    double bacteriovorous_resistance_reversion_probability = .4;
 
-    double ecoli_diffuse_probability = .5;
-    double bacteriovorous_diffuse_probability = .5;
-    double virus_diffuse_probability = .5;
-    double bdelloplast_diffuse_probability = .5;
-    double infected_diffuse_probability = .5;
-    double signal_diffuse_probability = .5;
+    double phage_resistance_mutation_probability = .9;
+    double phage_resistance_reversion_probability = .4;
+
+    double ecoli_diffuse_probability = .25;
+    double bacteriovorous_diffuse_probability = .25;
+    double virus_diffuse_probability = .25;
+    double bdelloplast_diffuse_probability = .25;
+    double infected_diffuse_probability = .25;
+    double signal_diffuse_probability = .25;
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -96,6 +97,30 @@ int main()
     int num_bacteriovorous, num_bdelloplast;
     int num_virus, num_infected;
 
+    int num_susceptible_ecoli_on_lattice;
+    int num_bacteriovorous_resistant_ecoli_on_lattice;
+    int num_phage_resistant_ecoli_on_lattice;
+    int num_bacteriovorous_on_lattice;
+    int num_bdelloplast_on_lattice;
+    int num_virus_on_lattice;
+    int num_infected_on_lattice;
+
+    int susceptible_ecoli_over_time [simulation_length + 1];
+    int bacteriovorous_resistant_over_time [simulation_length + 1];
+    int phage_resistant_over_time [simulation_length + 1];
+    int bacteriovorous_over_time [simulation_length + 1];
+    int bdelloplast_over_time [simulation_length + 1];
+    int virus_over_time [simulation_length + 1];
+    int infected_over_time [simulation_length + 1];
+
+    susceptible_ecoli_over_time[0] = init_ecoli_in_node * x_len * y_len;
+    bacteriovorous_resistant_over_time[0] = 0;
+    phage_resistant_over_time[0] = 0;
+    bacteriovorous_over_time[0] = init_bacteriovorous_in_node * x_len * y_len;
+    bdelloplast_over_time[0] = init_bdelloplast_in_node * x_len * y_len;
+    virus_over_time[0] = init_virus_in_node * x_len * y_len;
+    infected_over_time[0] = init_infected_in_node * x_len * y_len;
+
     // Create a lattice of nodes.
     node lattice[x_len][y_len];
 
@@ -111,10 +136,7 @@ int main()
                 bacteriovorous_resistance_mutation_probability,
                 bacteriovorous_resistance_reversion_probability, ecoli_max_nutrient_consumption,
                 ecoli_exist_energy_cost, ecoli_reproduce_energy_cost, max_signal_released,
-                max_bacteriorovorous_released, max_virus_released);
-
-            // num_virus = lattice[i][j].num_virus;
-            // std::cout << "num_virus: " << num_virus << std::endl;
+                max_bacteriorovorous_released, max_virus_released, bacteriovorous_mortality_period);
 
             for (int n = 0; n < init_ecoli_in_node; n++)
             {
@@ -138,60 +160,21 @@ int main()
 
     for (int k = 0; k < simulation_length; k++)
     {
+        std::cout << "step " << k << std::endl;
         for (int i = 0; i < x_len; i++)
         {
             for (int j = 0; j < y_len; j++)
             {
                 lattice[i][j].ecoli_consume_nutrients();
-                // for (int x = 0; x < lattice[i][j].ecoli_list.size(); x++)
-                // {
-                //     std::cout << "ecoli " << x << " energy: " << lattice[i][j].ecoli_list[x].energy << std::endl;
-                // }
                 lattice[i][j].iterate_ecoli_die_mutate_reproduce();
-                // Call function to iterate over the bacteriovorous cells and have them
-                //  attempt to attack Ecoli cells.
                 lattice[i][j].bacteriovorous_attack_prey();
                 lattice[i][j].virus_infect_prey();
                 lattice[i][j].burst_bdelloplasts();
                 lattice[i][j].burst_infected();
+                lattice[i][j].bacteriovorous_mortality();
             }
         }
 
-        // Create directories to store data generated by the simulation.
-        // std::string ecoli_dir_name = "ecoli/";
-        // std::string bacteriovorous_dir_name = "bacteriovorous/";
-        //
-        // std::filesystem::create_directories(ecoli_dir_name);
-        // std::filesystem::create_directories(bacteriovorous_dir_name);
-        //
-        // // Open files and specify file names.
-        // std::ofstream ecoli_file;
-        // std::ofstream bacteriovorous_file;
-        //
-        // ecoli_file.open(ecoli_dir_name + "ecoli_grid_pre.txt");
-        // bacteriovorous_file.open(bacteriovorous_dir_name + "bacteriovorous_grid_pre.txt");
-
-        // Iterate over the lattice and record the number of each agent onto output files.
-        // for (int i = 0; i < x_len; i++)
-        // {
-        //     for (int j = 0; j < y_len; j++)
-        //    {
-        //        num_ecoli = lattice[i][j].num_ecoli;
-        //        num_bacteriovorous = lattice[i][j].num_bacteriovorous;
-        //
-        //        ecoli_file << num_ecoli << " ";
-        //        bacteriovorous_file << num_bacteriovorous << " ";
-        //    }
-        //    ecoli_file << "\n";
-        //    // ecoli_file << std::endl;
-        //    bacteriovorous_file << "\n";
-        // }
-
-        // Close the output files.
-        // ecoli_file.close();
-        // bacteriovorous_file.close();
-
-        /*
         for (int i = 0; i < x_len; i++)
         {
             for (int j = 0; j < y_len; j++)
@@ -213,7 +196,6 @@ int main()
                     double north_node_amount, south_node_amount, west_node_amount, east_node_amount;
                     double n, s, w, e, t, pn, ps, pw, pe;
 
-                    // std::cout << "h: " << h << std::endl;
                     particle_type = particle_list[h];
 
                     if (particle_type == "ecoli")
@@ -306,18 +288,6 @@ int main()
                             }
                         }
                     }
-
-                    // std::cout << "particle type: " << particle_type << std::endl;
-                    // for (int n = 0; n < move_list.size(); n++)
-                        // std::cout << "all index: " << move_list[n] << std::endl;
-                    // for (int n = 0; n < move_north_list.size(); n++)
-                        // std::cout << "move north index: " << move_north_list[n] << std::endl;
-                    // for (int n = 0; n < move_south_list.size(); n++)
-                        // std::cout << "move south index: " << move_south_list[n] << std::endl;
-                    // for (int n = 0; n < move_west_list.size(); n++)
-                        // std::cout << "move west index: " << move_west_list[n] << std::endl;
-                    // for (int n = 0; n < move_east_list.size(); n++)
-                        // std::cout << "move east index: " << move_east_list[n] << std::endl;
 
                     // std::cout << "here1" << std::endl;
                     for (int n = 0; n < move_north_list.size(); n++)
@@ -483,74 +453,87 @@ int main()
                 }
             }
         }
-        */
-        // std::cout << "here" << std::endl;
+
+        num_susceptible_ecoli_on_lattice = 0;
+        num_bacteriovorous_resistant_ecoli_on_lattice = 0;
+        num_phage_resistant_ecoli_on_lattice = 0;
+        num_bacteriovorous_on_lattice = 0;
+        num_bdelloplast_on_lattice = 0;
+        num_virus_on_lattice = 0;
+        num_infected_on_lattice = 0;
+
         for (int i = 0; i < x_len; i++)
         {
             for (int j = 0; j < y_len; j++)
             {
                 lattice[i][j].demove_organisms();
+
+                for (int p = 0; p < lattice[i][j].ecoli_list.size(); p++)
+                {
+                    if (lattice[i][j].ecoli_list[p].bacteriovorous_resistant == true)
+                    {
+                        num_bacteriovorous_resistant_ecoli_on_lattice += 1;
+                    }
+                    else if (lattice[i][j].ecoli_list[p].phage_resistant == true)
+                    {
+                        num_phage_resistant_ecoli_on_lattice += 1;
+                    }
+                    else
+                    {
+                        num_susceptible_ecoli_on_lattice += 1;
+                    }
+                }
+
+                num_bacteriovorous_on_lattice += lattice[i][j].num_bacteriovorous;
+                num_bdelloplast_on_lattice += lattice[i][j].num_bdelloplast;
+                num_virus_on_lattice += lattice[i][j].num_virus;
+                num_infected_on_lattice += lattice[i][j].num_infected;
             }
         }
+
+        susceptible_ecoli_over_time[k+1] = num_susceptible_ecoli_on_lattice;
+        bacteriovorous_resistant_over_time[k+1] = num_bacteriovorous_resistant_ecoli_on_lattice;
+        phage_resistant_over_time[k+1] = num_phage_resistant_ecoli_on_lattice;
+        bacteriovorous_over_time[k+1] = num_bacteriovorous_on_lattice;
+        bdelloplast_over_time[k+1] = num_bdelloplast_on_lattice;
+        virus_over_time[k+1] = num_virus_on_lattice;
+        infected_over_time[k+1] = num_infected_on_lattice;
     }
 
     // Printing out the amount of each agent in each node as well as a node's neighbors
     //  for testing purposes.
-    for (int i = 0; i < x_len; i++)
-    {
-        for (int j = 0; j < y_len; j++)
-       {
-           std::cout << "Location: " << i << ", " << j << std::endl;
-
-           num_ecoli = lattice[i][j].num_ecoli;
-           num_bacteriovorous = lattice[i][j].num_bacteriovorous;
-           num_bdelloplast = lattice[i][j].num_bdelloplast;
-           num_virus = lattice[i][j].num_virus;
-           num_infected = lattice[i][j].num_infected;
-
-           std::cout << "Amount of E. coli in this node: " << num_ecoli << std::endl;
-
-           std::cout << "Amount of bacteriovorous in this node: " << num_bacteriovorous << std::endl;
-           std::cout << "Amount of bdelloplast in this node: " << num_bdelloplast << std::endl;
-
-           std::cout << "Amount of virus' in this node: " << num_virus << std::endl;
-           std::cout << "Amount of infected E. coli cells in this node: " << num_infected << std::endl;
-
-           ij_coordinates = determine_ij(i, j, x_len, y_len);
-
-           i_up = ij_coordinates[0];
-           i_down = ij_coordinates[1];
-           j_left = ij_coordinates[2];
-           j_right = ij_coordinates[3];
-
-           std::cout << "i: " << i << ", j: " << j
-                        << ", i_up: " << i_up << ", i_down: " << i_down
-                        << ", j_left: " << j_left << ", j_right: " << j_right << std::endl;
-           std::cout << "##########################################################" << std::endl;
-
-           // bool bacteriovorous_resistant, phage_resistant;
-           //
-           // for (int k = 0; k < lattice[i][j].num_ecoli; k++)
-           // {
-           //     bacteriovorous_resistant = lattice[i][j].ecoli_list[k].bacteriovorous_resistant;
-           //     phage_resistant = lattice[i][j].ecoli_list[k].phage_resistant;
-           //     std::cout << "bacteriovorous resistance: " << bacteriovorous_resistant << std::endl;
-           //     std::cout << "phage resistance: " << phage_resistant << std::endl;
-           // }
-
-       }
-    }
-
-    // std::vector<int> myvector = {0, 1, 2, 3, 4, 5};
-    //
-    // myvector.erase(myvector.begin() + 1);
-    // myvector.erase(myvector.begin() + 1);
-    //
-    // std::sort(myvector.begin(), myvector.end(), std::greater<>());
-
-    // for (int i = 0; i < myvector.size(); i++)
+    // for (int i = 0; i < x_len; i++)
     // {
-    //     std::cout << "num: " << myvector[i] << std::endl;
+    //     for (int j = 0; j < y_len; j++)
+    //    {
+    //        std::cout << "Location: " << i << ", " << j << std::endl;
+    //
+    //        num_ecoli = lattice[i][j].num_ecoli;
+    //        num_bacteriovorous = lattice[i][j].num_bacteriovorous;
+    //        num_bdelloplast = lattice[i][j].num_bdelloplast;
+    //        num_virus = lattice[i][j].num_virus;
+    //        num_infected = lattice[i][j].num_infected;
+    //
+    //        std::cout << "Amount of E. coli in this node: " << num_ecoli << std::endl;
+    //
+    //        std::cout << "Amount of bacteriovorous in this node: " << num_bacteriovorous << std::endl;
+    //        std::cout << "Amount of bdelloplast in this node: " << num_bdelloplast << std::endl;
+    //
+    //        std::cout << "Amount of virus' in this node: " << num_virus << std::endl;
+    //        std::cout << "Amount of infected E. coli cells in this node: " << num_infected << std::endl;
+
+           // ij_coordinates = determine_ij(i, j, x_len, y_len);
+           //
+           // i_up = ij_coordinates[0];
+           // i_down = ij_coordinates[1];
+           // j_left = ij_coordinates[2];
+           // j_right = ij_coordinates[3];
+           //
+           // std::cout << "i: " << i << ", j: " << j
+           //              << ", i_up: " << i_up << ", i_down: " << i_down
+           //              << ", j_left: " << j_left << ", j_right: " << j_right << std::endl;
+           // std::cout << "##########################################################" << std::endl;
+       // }
     // }
 
 
@@ -562,11 +545,32 @@ int main()
     // std::filesystem::create_directories(bacteriovorous_dir_name);
 
     // Open files and specify file names.
-    // std::ofstream ecoli_file;
-    // std::ofstream bacteriovorous_file;
+    std::ofstream susceptible_ecoli_over_time_file;
+    std::ofstream bacteriovorous_resistant_over_time_file;
+    std::ofstream phage_resistant_over_time_file;
+    std::ofstream bacteriovorous_over_time_file;
+    std::ofstream bdelloplast_over_time_file;
+    std::ofstream virus_over_time_file;
+    std::ofstream infected_over_time_file;
 
-    // ecoli_file.open(ecoli_dir_name + "ecoli_grid.txt");
-    // bacteriovorous_file.open(bacteriovorous_dir_name + "bacteriovorous_grid.txt");
+    susceptible_ecoli_over_time_file.open("susceptible_ecoli_over_time.txt");
+    bacteriovorous_resistant_over_time_file.open("bacteriovorous_resistant_over_time.txt");
+    phage_resistant_over_time_file.open("phage_resistant_over_time.txt");
+    bacteriovorous_over_time_file.open("bacteriovorous_over_time.txt");
+    bdelloplast_over_time_file.open("bdelloplast_over_time.txt");
+    virus_over_time_file.open("virus_over_time.txt");
+    infected_over_time_file.open("infected_over_time.txt");
+
+    for (int k = 0; k < simulation_length + 1; k++)
+    {
+        susceptible_ecoli_over_time_file << susceptible_ecoli_over_time[k] << std::endl;
+        bacteriovorous_resistant_over_time_file << bacteriovorous_resistant_over_time[k] << std::endl;
+        phage_resistant_over_time_file << phage_resistant_over_time[k] << std::endl;
+        bacteriovorous_over_time_file << bacteriovorous_over_time[k] << std::endl;
+        bdelloplast_over_time_file << bdelloplast_over_time[k] << std::endl;
+        virus_over_time_file << virus_over_time[k] << std::endl;
+        infected_over_time_file << infected_over_time[k] << std::endl;
+    }
 
     // Iterate over the lattice and record the number of each agent onto output files.
     // for (int i = 0; i < x_len; i++)
@@ -588,5 +592,12 @@ int main()
     // ecoli_file.close();
     // bacteriovorous_file.close();
 
+    susceptible_ecoli_over_time_file.close();
+    bacteriovorous_resistant_over_time_file.close();
+    phage_resistant_over_time_file.close();
+    bacteriovorous_over_time_file.close();
+    bdelloplast_over_time_file.close();
+    virus_over_time_file.close();
+    infected_over_time_file.close();
 
 }

@@ -13,14 +13,14 @@ public:
     {
 
     }
-    // Constructor to take in the x and y coordinates of the virus, the virus' ID, and the virus' name.
-    Virus(int i, int j, int num, std::string org) : Agent(i, j, num, org)
+    // Constructor to take in the x and y coordinates of the virus.
+    Virus(int i, int j) : Agent(i, j)
     {
 
     }
-    // Constructor to take in the x and y coordinates of the virus, the virus' ID, and the virus' name.
-    Virus(int i, int j, int num, std::string org, double attack_rate, int infected_incubation_period)
-        : Agent(i, j, num, org), attack_rate(attack_rate), infected_incubation_period(infected_incubation_period)
+    // Constructor to take in the x and y coordinates of the virus.
+    Virus(int i, int j, double attack_rate, int infected_incubation_period)
+        : Agent(i, j), attack_rate(attack_rate), infected_incubation_period(infected_incubation_period)
     {
         // How often the virus carries out a successful attack on an Ecoli cell.
         this->attack_rate = attack_rate;

@@ -14,7 +14,7 @@ public:
 
     }
     // Constructor to take in the x and y coordinates of the bacteria, the bacteria's ID, and the bacteria's name.
-    Bacteria(int i, int j, int num, std::string org) : Agent(i, j, num, org)
+    Bacteria(int i, int j) : Agent(i, j)
     {
 
     }
