@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "test_02.py", line 147, in <module>
+    r, psi, psiExact = run_monte_carlo(N_T)
+  File "test_02.py", line 112, in run_monte_carlo
+    r, alive, psi, E_T, ESum, ESqdSum = oneTimeStep(r, alive, psi, E_T, ESum, ESqdSum)
+  File "test_02.py", line 71, in oneTimeStep
+    r, alive = oneMonteCarloStep(r, alive, n, E_T)
+  File "test_02.py", line 45, in oneMonteCarloStep
+    r[n][d] += np.random.normal(0, 1) * dt**.5
+KeyboardInterrupt

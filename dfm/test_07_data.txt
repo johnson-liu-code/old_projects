@@ -1,0 +1,23 @@
+(85, 85)
+(78, 78)
+(73, 73)
+(69, 69)
+(67, 67)
+(63, 63)
+(62, 62)
+(60, 60)
+(54, 54)
+(50, 50)
+(48, 48)
+(46, 46)
+(45, 45)
+Traceback (most recent call last):
+  File "test_02.py", line 146, in <module>
+    r, psi, psiExact = run_monte_carlo(N_T)
+  File "test_02.py", line 111, in run_monte_carlo
+    r, alive, psi, E_T, ESum, ESqdSum = oneTimeStep(r, alive, psi, E_T, ESum, ESqdSum)
+  File "test_02.py", line 70, in oneTimeStep
+    r, alive = oneMonteCarloStep(r, alive, n, E_T)
+  File "test_02.py", line 59, in oneMonteCarloStep
+    r[N][d] = r[n][d]
+IndexError: list index out of range

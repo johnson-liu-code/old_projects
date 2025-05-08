@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "test_01.py", line 136, in <module>
+    r, psi, psiExact = run_monte_carlo(N_T)
+  File "test_01.py", line 101, in run_monte_carlo
+    r, alive, N, psi, ESum, ESqdSum = oneTimeStep(r, alive, N, psi, E_T, ESum, ESqdSum)
+  File "test_01.py", line 75, in oneTimeStep
+    E_T += np.log( N_T / float(N) ) / 10.
+ZeroDivisionError: float division by zero
